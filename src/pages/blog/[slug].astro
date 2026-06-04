@@ -20,12 +20,12 @@ const formattedDate = post.data.date.toLocaleDateString("en-US", {
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <main class="page">
-    <article class="container prose">
-      <header class="post-heading">
+  <main class="page-fallback">
+    <article class="reader">
+      <header>
         <p class="post-meta">{formattedDate}</p>
         <h1>{post.data.title}</h1>
-        <p class="hero-copy">{post.data.description}</p>
+        <p class="reader-description">{post.data.description}</p>
         <ul class="tag-list" aria-label={`Tags for ${post.data.title}`}>
           {post.data.tags.map((tag) => <li class="tag">{tag}</li>)}
         </ul>

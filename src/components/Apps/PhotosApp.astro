@@ -1,0 +1,35 @@
+---
+import type { PhotoItem } from "@/data/photos";
+
+type Props = {
+  photos: PhotoItem[];
+};
+
+const { photos } = Astro.props;
+const sortedPhotos = [...photos].sort((a, b) => b.date.localeCompare(a.date));
+---
+
+<div class="explorer-layout">
+  <aside class="explorer-sidebar">
+    <strong>public/photos</strong>
+    <span>Newest first</span>
+    <span>{photos.length} files</span>
+  </aside>
+  <div class="thumb-grid">
+    {
+      sortedPhotos.map((photo) => (
+        <article class="photo-card" data-preview-title={photo.title} data-preview-description={photo.description ?? ""} data-preview-src={photo.src}>
+          <button class="photo-thumb" type="button" data-photo-preview>
+            <img src={photo.src} alt="" loading="lazy" />
+          </button>
+          <div>
+            <h3>{photo.title}</h3>
+            <p>{photo.filename}</p>
+            <p>{photo.date}</p>
+            {photo.description && <p>{photo.description}</p>}
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</div>

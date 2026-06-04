@@ -11,21 +11,33 @@ export type TimelineItem = {
 
 export const timelineItems: TimelineItem[] = [
   {
-    date: "2026",
-    title: "Launched kevinreape.com",
-    category: "Project",
-    description: "A new home for notes, essays, experiments, and the occasional carefully opened door."
-  },
-  {
-    date: "2025",
-    title: "Expanded creative systems work",
+    date: "2023",
+    title: "Joined Missouri S&T Business Intelligence",
     category: "Work",
-    description: "Placeholder milestone for a meaningful professional chapter, project arc, or role."
+    description: "Joined the Business Intelligence team at Missouri S&T."
   },
   {
-    date: "2024",
-    title: "Started a public writing practice",
-    category: "Writing",
-    description: "Placeholder milestone for collecting ideas, documenting process, and sharing useful artifacts."
+    date: "2022",
+    title: "Became Chief Storyteller at Trulaske College of Business",
+    category: "Work",
+    description: "Became Chief Storyteller at the Trulaske College of Business."
+  },
+  {
+    date: "2019",
+    title: "Founded Mizzou Esports",
+    category: "Project",
+    description: "Founded Mizzou Esports."
+  },
+  {
+    date: "2014",
+    title: "Graduated from Mizzou",
+    category: "Life",
+    description: "Graduated from the University of Missouri."
+  },
+  {
+    date: "1991",
+    title: "Born in St. Louis, Missouri",
+    category: "Life",
+    description: "Born in St. Louis, Missouri."
   }
 ];

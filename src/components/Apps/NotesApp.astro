@@ -1,0 +1,21 @@
+---
+import type { NoteItem } from "@/data/notes";
+
+type Props = {
+  notes: NoteItem[];
+};
+
+const { notes } = Astro.props;
+---
+
+<div class="notes-stack">
+  {
+    notes.map((note) => (
+      <article>
+        <h3>{note.title}</h3>
+        {note.date && <time>{note.date}</time>}
+        <p>{note.body}</p>
+      </article>
+    ))
+  }
+</div>

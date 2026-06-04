@@ -1,5 +1,4 @@
 ---
-import SiteHeader from "./SiteHeader.astro";
 import "../styles/global.css";
 
 type Props = {
@@ -43,13 +42,7 @@ const pageTitle = title === "Kevin Reape" ? title : `${title} | Kevin Reape`;
   </head>
   <body>
     <div class="site-shell">
-      <SiteHeader />
       <slot />
-      <footer class="footer">
-        <div class="container">
-          <span>&copy; {new Date().getFullYear()} Kevin Reape. Built with Astro.</span>
-        </div>
-      </footer>
     </div>
   </body>
 </html>

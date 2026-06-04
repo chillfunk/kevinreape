@@ -1,17 +1,17 @@
 ---
-title: "Opening the Door"
+title: "Opening KevinOS"
 date: 2026-06-04
-description: "A short note on entry points, first impressions, and making a personal site feel alive."
-tags: ["design", "web", "personal site"]
+description: "A short note on turning a personal site into a small operating system."
+tags: ["design", "web", "KevinOS"]
 draft: false
 ---
 
-The first screen of a personal site does not need to explain everything. Sometimes it can simply set a tone.
+The first screen of a personal site does not need to behave like a standard homepage. Sometimes it can become an interface.
 
-This version of the site begins with a door: quiet, centered, and waiting for a tiny bit of participation. The interaction is brief by design. It gives the visit a pulse, then gets out of the way so the writing can take over.
+This version of the site treats the archive like a small desktop: files, apps, notes, windows, and a little bit of productive nostalgia. It is still static, fast, and made of plain content files underneath.
 
-## Why a Door?
+## Why a Desktop?
 
-A door is a useful metaphor because it is familiar without being too literal. It suggests privacy, welcome, mystery, and choice. That makes it a fitting threshold for a blog that may eventually hold work notes, essays, small experiments, and half-lit ideas.
+A desktop is a useful metaphor because it makes room for different kinds of material without forcing everything into one feed. Writing can live beside photos. Project notes can sit near bookmarks. A timeline can feel like a file worth opening.
 
-The important part is restraint. A charming detail should not become a tax on the reader.
+The important part is restraint. The interface should feel playful, but the content still has to be readable.

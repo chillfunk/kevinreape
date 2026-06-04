@@ -1,0 +1,29 @@
+---
+export type Props = {
+  apps: {
+    id: string;
+    title: string;
+    icon: string;
+  }[];
+};
+
+const { apps } = Astro.props;
+---
+
+<section class="mobile-os" aria-label="Mobile app launcher">
+  <header class="mobile-status">
+    <span>KevinOS</span>
+    <time data-clock>--:--</time>
+  </header>
+  <div class="mobile-launcher">
+    {
+      apps.map((app) => (
+        <button type="button" data-mobile-open={app.id}>
+          <span class={`win98-icon win98-icon-${app.icon}`} aria-hidden="true"></span>
+          <span>{app.title}</span>
+        </button>
+      ))
+    }
+  </div>
+  <slot />
+</section>

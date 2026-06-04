@@ -1,0 +1,27 @@
+---
+import type { LinkGroup } from "@/data/links";
+
+type Props = {
+  groups: LinkGroup[];
+};
+
+const { groups } = Astro.props;
+---
+
+<div class="bookmark-groups">
+  {
+    groups.map((group) => (
+      <section>
+        <h3>{group.category}</h3>
+        <div class="bookmark-list">
+          {group.links.map((link) => (
+            <a href={link.href}>
+              <strong>{link.label}</strong>
+              {link.description && <span>{link.description}</span>}
+            </a>
+          ))}
+        </div>
+      </section>
+    ))
+  }
+</div>

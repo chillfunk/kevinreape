@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "@/components/BaseLayout.astro";
-import TimelineItem from "@/components/TimelineItem.astro";
 import { timelineItems } from "@/data/timeline";
 ---
 
@@ -8,18 +7,25 @@ import { timelineItems } from "@/data/timeline";
   title="Timeline"
   description="Important life, work, writing, and project milestones from Kevin Reape."
 >
-  <main class="page">
-    <section class="container hero">
-      <div>
-        <p class="eyebrow">Timeline</p>
-        <h1>Milestones with room to breathe.</h1>
-        <p class="hero-copy">
-          A simple, editable timeline for the important work, life, and project moments that should not be buried in a folder.
-        </p>
+  <main class="page-fallback">
+    <section>
+      <h1>Timeline</h1>
+      <p>This route is a direct, SEO-friendly fallback for the desktop Timeline app.</p>
+      <div class="os-timeline">
+        {
+          timelineItems.map((item) => (
+            <article>
+              <time>{item.date}</time>
+              <div>
+                <span>{item.category}</span>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+                {item.link && <a href={item.link.href}>{item.link.label}</a>}
+              </div>
+            </article>
+          ))
+        }
       </div>
-    </section>
-    <section class="container timeline" aria-label="Milestones">
-      {timelineItems.map((item) => <TimelineItem item={item} />)}
     </section>
   </main>
 </BaseLayout>

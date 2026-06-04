@@ -1,36 +1,35 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import BaseLayout from "@/components/BaseLayout.astro";
-import EntryGate from "@/components/EntryGate.astro";
-import PostCard from "@/components/PostCard.astro";
+import DesktopExperience from "@/components/Desktop/DesktopExperience.astro";
+import { photos } from "@/data/photos";
+import { timelineItems } from "@/data/timeline";
+import { projects } from "@/data/projects";
+import { notes } from "@/data/notes";
+import { linkGroups } from "@/data/links";
 
 const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const renderedPosts = await Promise.all(
+  posts.map(async (post) => {
+    const { Content } = await render(post);
+    return { ...post, rendered: Content };
+  })
 );
 ---
 
 <BaseLayout
   title="Kevin Reape"
-  description="A personal blog for essays, projects, notes, and strange little thresholds."
+  description="Kevin Reape's personal operating system for writing, projects, photos, links, and notes."
 >
-  <EntryGate />
-  <main class="page">
-    <section class="container hero">
-      <div>
-        <p class="eyebrow">Personal blog</p>
-        <h1>Notes from the threshold.</h1>
-        <p class="hero-copy">
-          Essays, project notes, and occasional field reports from the places where work, creativity, and curiosity start talking to each other.
-        </p>
-      </div>
-      <p class="hero-note">
-        Newest posts first. The archive is intentionally simple, fast, and easy to grow.
-      </p>
-    </section>
-    <section class="container" aria-label="Latest posts">
-      <div class="post-grid">
-        {posts.map((post) => <PostCard post={post} />)}
-      </div>
-    </section>
-  </main>
+  <DesktopExperience
+    posts={renderedPosts}
+    photos={photos}
+    timelineItems={timelineItems}
+    projects={projects}
+    notes={notes}
+    linkGroups={linkGroups}
+  />
 </BaseLayout>

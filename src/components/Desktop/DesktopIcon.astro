@@ -1,0 +1,14 @@
+---
+export type Props = {
+  app: string;
+  label: string;
+  icon: string;
+};
+
+const { app, label, icon } = Astro.props;
+---
+
+<button class="desktop-icon" type="button" data-desktop-icon data-open-app={app} aria-label={`Open ${label}`}>
+  <span class={`win98-icon win98-icon-${icon}`} aria-hidden="true"></span>
+  <span>{label}</span>
+</button>
