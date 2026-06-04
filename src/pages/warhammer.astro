@@ -1,0 +1,98 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { warhammer } from "@/data/warhammer";
+
+const categories = ["Characters", "Battleline", "Infantry", "Vehicles"] as const;
+const totalPoints = warhammer.ownedUnits.reduce((sum, unit) => sum + (unit.points ?? 0), 0);
+const unitCount = warhammer.ownedUnits.length;
+---
+
+<BaseLayout title="Warhammer" description="Black Templars army notes, units, painting progress, and wanted models.">
+  <main class="page game-content-page">
+    <div class="container">
+      <header class="page-heading game-panel hero-panel">
+        <p class="eyebrow">Warhammer</p>
+        <h1>{warhammer.faction}</h1>
+      </header>
+      <p class="page-subtitle war-subtitle">{warhammer.overview}</p>
+
+      <section class="roster-summary" aria-label="Collection summary">
+        <article>
+          <span>Total Points</span>
+          <strong>{totalPoints.toLocaleString()}</strong>
+        </article>
+        <article>
+          <span>Owned Entries</span>
+          <strong>{unitCount}</strong>
+        </article>
+        <article>
+          <span>Faction</span>
+          <strong>{warhammer.faction}</strong>
+        </article>
+      </section>
+
+      <section class="page-heading section-heading">
+        <p class="eyebrow">Owned Units</p>
+        <h2>Army manifest.</h2>
+      </section>
+
+      <section class="roster-groups">
+        {categories.map((category) => {
+          const units = warhammer.ownedUnits.filter((unit) => unit.category === category);
+          const categoryPoints = units.reduce((sum, unit) => sum + (unit.points ?? 0), 0);
+          const categoryMeta =
+            category === "Characters" ? `${units.length} heroes` : `${units.length} entries / ${categoryPoints} pts`;
+
+          return (
+            <section class="roster-group">
+              <header class="roster-group-header">
+                <p class="eyebrow">{category}</p>
+                <span>{categoryMeta}</span>
+              </header>
+              <div class="roster-list">
+                {units.map((unit) => (
+                  <article class="roster-row">
+                    {unit.images?.[0] && <img src={unit.images[0].src} alt={unit.images[0].alt} loading="lazy" />}
+                    <div class="roster-main">
+                      <p class="card-meta">{unit.points ? `${unit.count} / ${unit.points} pts` : `${unit.count} / Hero`}</p>
+                      <h3>{unit.name}</h3>
+                      <div class="status-row">
+                        <span>{unit.assemblyStatus}</span>
+                        <span>{unit.paintingStatus}</span>
+                      </div>
+                      {unit.notes && <p>{unit.notes}</p>}
+                    </div>
+                    {unit.wargear && (
+                      <ul class="wargear-list" aria-label={`${unit.name} wargear`}>
+                        {unit.wargear.map((item) => <li>{item}</li>)}
+                      </ul>
+                    )}
+                  </article>
+                ))}
+              </div>
+            </section>
+          );
+        })}
+      </section>
+
+      <section class="subsection">
+        <div class="page-heading">
+          <p class="eyebrow">Wanted</p>
+          <h2>Future reinforcements.</h2>
+        </div>
+        <div class="wanted-list">
+          {warhammer.wantedItems.map((item) => (
+            <article class="wanted-row">
+              <div>
+                <p class="card-meta">{item.priority} priority</p>
+                <h3>{item.name}</h3>
+                {item.notes && <p>{item.notes}</p>}
+              </div>
+              {item.link && <a href={item.link}>Reference</a>}
+            </article>
+          ))}
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

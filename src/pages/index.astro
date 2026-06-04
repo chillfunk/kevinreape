@@ -1,35 +1,46 @@
 ---
-import { getCollection, render } from "astro:content";
-import BaseLayout from "@/components/BaseLayout.astro";
-import DesktopExperience from "@/components/Desktop/DesktopExperience.astro";
-import { photos } from "@/data/photos";
-import { timelineItems } from "@/data/timeline";
-import { projects } from "@/data/projects";
-import { notes } from "@/data/notes";
-import { linkGroups } from "@/data/links";
-
-const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
-
-const renderedPosts = await Promise.all(
-  posts.map(async (post) => {
-    const { Content } = await render(post);
-    return { ...post, rendered: Content };
-  })
-);
+import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
 <BaseLayout
   title="Kevin Reape"
-  description="Kevin Reape's personal operating system for writing, projects, photos, links, and notes."
+  description="Kevin Reape's personal site for writing, photos, Warhammer, notes, and media."
+  hideChrome
 >
-  <DesktopExperience
-    posts={renderedPosts}
-    photos={photos}
-    timelineItems={timelineItems}
-    projects={projects}
-    notes={notes}
-    linkGroups={linkGroups}
-  />
+  <main class="main-menu-screen">
+    <div class="menu-backdrop" aria-hidden="true"></div>
+    <header class="game-topbar">
+      <a class="game-logo" href="/" aria-label="Home">
+        <span>Vibeologist</span>
+        <strong>Kevin Reape</strong>
+      </a>
+      <div class="game-profile">
+        <span>KR</span>
+        <strong>Online</strong>
+      </div>
+    </header>
+
+    <section class="game-menu" aria-label="Main menu">
+      <p class="game-kicker">Personal archive</p>
+      <nav>
+        <a href="/blog/">Blog</a>
+        <a href="/photos/">Photos</a>
+        <a href="/warhammer/">Warhammer</a>
+        <a href="/watching-reading/">Watching & Reading</a>
+        <a href="/notes/">Notes</a>
+      </nav>
+    </section>
+
+    <section class="hero-character" aria-label="Chillfunk hero image">
+      <div class="wing wing-left"></div>
+      <div class="wing wing-right"></div>
+      <div class="portrait-standin">
+        <img class="hero-portrait" src="/images/chillfunk-hero.webp" alt="Chillfunk hero portrait" />
+      </div>
+      <div class="character-label">
+        <strong>CHILLFUNK</strong>
+        <span>34 / 34 MISSIONS UNLOCKED</span>
+      </div>
+    </section>
+  </main>
 </BaseLayout>

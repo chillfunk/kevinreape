@@ -1,0 +1,21 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NoteCard from "@/components/NoteCard.astro";
+import { notes } from "@/data/notes";
+
+const sortedNotes = [...notes].sort((a, b) => b.date.localeCompare(a.date));
+---
+
+<BaseLayout title="Notes" description="Short notes, scraps, quotes, and observations from Kevin Reape.">
+  <main class="page game-content-page">
+    <div class="container">
+      <header class="page-heading game-panel hero-panel">
+        <p class="eyebrow">Notes</p>
+        <h1>Field notes.</h1>
+      </header>
+      <section class="notes-list">
+        {sortedNotes.map((note) => <NoteCard note={note} />)}
+      </section>
+    </div>
+  </main>
+</BaseLayout>

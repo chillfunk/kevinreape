@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
-import BaseLayout from "@/components/BaseLayout.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
@@ -20,11 +20,13 @@ const formattedDate = post.data.date.toLocaleDateString("en-US", {
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <main class="page-fallback">
-    <article class="reader">
-      <header>
-        <p class="post-meta">{formattedDate}</p>
-        <h1>{post.data.title}</h1>
+  <main class="page game-content-page">
+    <article class="container prose reader-panel">
+      <header class="post-header">
+        <div class="game-panel hero-panel">
+          <p class="eyebrow">{formattedDate}</p>
+          <h1>{post.data.title}</h1>
+        </div>
         <p class="reader-description">{post.data.description}</p>
         <ul class="tag-list" aria-label={`Tags for ${post.data.title}`}>
           {post.data.tags.map((tag) => <li class="tag">{tag}</li>)}

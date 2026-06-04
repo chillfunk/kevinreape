@@ -1,0 +1,18 @@
+---
+import type { PhotoItem } from "@/data/photos";
+
+type Props = { photo: PhotoItem };
+const { photo } = Astro.props;
+---
+
+<article class="photo-card">
+  <img src={photo.src} alt={photo.title} loading="lazy" />
+  <div>
+    <p class="card-meta">{photo.date}</p>
+    <h3>{photo.title}</h3>
+    {photo.description && <p>{photo.description}</p>}
+    <ul class="tag-list">
+      {photo.tags.map((tag) => <li>{tag}</li>)}
+    </ul>
+  </div>
+</article>

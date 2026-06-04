@@ -1,0 +1,17 @@
+---
+import type { NoteItem } from "@/data/notes";
+
+type Props = { note: NoteItem };
+const { note } = Astro.props;
+---
+
+<article class="note-card">
+  <p>{note.text}</p>
+  <div>
+    <time>{note.date}</time>
+    <ul class="tag-list">
+      {note.tags.map((tag) => <li>{tag}</li>)}
+    </ul>
+    {note.link && <a href={note.link}>Related</a>}
+  </div>
+</article>

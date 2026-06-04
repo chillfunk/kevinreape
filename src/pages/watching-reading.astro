@@ -1,0 +1,40 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import MediaCard from "@/components/MediaCard.astro";
+import { mediaItems } from "@/data/media";
+
+const sortedItems = [...mediaItems].sort((a, b) => b.date.localeCompare(a.date));
+const watchingItems = sortedItems.filter((item) => item.type === "watching");
+const readingItems = sortedItems.filter((item) => item.type === "reading");
+---
+
+<BaseLayout title="Watching & Reading" description="Things Kevin is watching, reading, listening to, playing, or thinking about.">
+  <main class="page game-content-page">
+    <div class="container">
+      <header class="page-heading game-panel hero-panel">
+        <p class="eyebrow">Watching & Reading</p>
+        <h1>Current queue.</h1>
+      </header>
+      <section class="media-columns">
+        <div>
+          <div class="page-heading section-heading">
+            <p class="eyebrow">Watching</p>
+            <h2>On screen.</h2>
+          </div>
+          <div class="media-list">
+            {watchingItems.map((item) => <MediaCard item={item} />)}
+          </div>
+        </div>
+        <div>
+          <div class="page-heading section-heading">
+            <p class="eyebrow">Reading</p>
+            <h2>On deck.</h2>
+          </div>
+          <div class="media-list">
+            {readingItems.map((item) => <MediaCard item={item} />)}
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

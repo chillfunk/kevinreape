@@ -1,0 +1,23 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PostCard from "@/components/PostCard.astro";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout title="Blog" description="Markdown posts from Kevin Reape.">
+  <main class="page game-content-page">
+    <div class="container">
+      <header class="page-heading game-panel hero-panel">
+        <p class="eyebrow">Blog</p>
+        <h1>Mission logs.</h1>
+      </header>
+      <section class="grid">
+        {posts.map((post) => <PostCard post={post} />)}
+      </section>
+    </div>
+  </main>
+</BaseLayout>

@@ -1,0 +1,17 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+type Props = { post: CollectionEntry<"blog"> };
+
+const { post } = Astro.props;
+const date = post.data.date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+---
+
+<a class="post-card" href={`/blog/${post.slug}/`}>
+  <p class="card-meta">{date}</p>
+  <h3>{post.data.title}</h3>
+  <p>{post.data.description}</p>
+  <ul class="tag-list" aria-label={`Tags for ${post.data.title}`}>
+    {post.data.tags.map((tag) => <li>{tag}</li>)}
+  </ul>
+</a>

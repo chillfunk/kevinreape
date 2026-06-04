@@ -1,0 +1,28 @@
+---
+const navItems = [
+  { href: "/", label: "Home" },
+  { href: "/photos/", label: "Photos" },
+  { href: "/warhammer/", label: "Warhammer" },
+  { href: "/blog/", label: "Blog" },
+  { href: "/watching-reading/", label: "Watching & Reading" },
+  { href: "/notes/", label: "Notes" }
+];
+
+const pathname = Astro.url.pathname;
+---
+
+<header class="site-header game-topbar">
+  <nav class="nav-shell" aria-label="Primary navigation">
+    <a class="brand game-logo compact-logo" href="/" aria-label="Home">
+      <span>Vibeologist</span>
+      <strong>Kevin Reape</strong>
+    </a>
+    <div class="nav-links">
+      {navItems.map((item) => <a href={item.href} aria-current={pathname === item.href ? "page" : undefined}>{item.label}</a>)}
+    </div>
+    <div class="game-profile">
+      <span>KR</span>
+      <strong>Online</strong>
+    </div>
+  </nav>
+</header>

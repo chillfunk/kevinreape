@@ -1,0 +1,22 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PhotoCard from "@/components/PhotoCard.astro";
+import { photos } from "@/data/photos";
+
+const sortedPhotos = [...photos].sort((a, b) => b.date.localeCompare(a.date));
+---
+
+<BaseLayout title="Photos" description="A chronological photo feed from Kevin Reape.">
+  <main class="page game-content-page">
+    <div class="container">
+      <header class="page-heading game-panel hero-panel">
+        <p class="eyebrow">Photos</p>
+        <h1>Visual archive.</h1>
+      </header>
+      <p class="page-subtitle">Images live in <code>public/photos</code> with metadata in <code>src/data/photos.ts</code>.</p>
+      <section class="photo-grid">
+        {sortedPhotos.map((photo) => <PhotoCard photo={photo} />)}
+      </section>
+    </div>
+  </main>
+</BaseLayout>

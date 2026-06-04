@@ -1,16 +1,20 @@
 ---
-import "../styles/global.css";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import "@/styles/global.css";
 
 type Props = {
   title?: string;
   description?: string;
   image?: string;
+  hideChrome?: boolean;
 };
 
 const {
   title = "Kevin Reape",
-  description = "Notes, essays, projects, and traces from Kevin Reape.",
-  image = "/og-default.png"
+  description = "Personal site, blog, photos, Warhammer notes, media, and short scraps from Kevin Reape.",
+  image = "/og-default.png",
+  hideChrome = false
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://kevinreape.com");
@@ -41,8 +45,17 @@ const pageTitle = title === "Kevin Reape" ? title : `${title} | Kevin Reape`;
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div class="site-shell">
-      <slot />
-    </div>
+    {
+      hideChrome ? (
+        <slot />
+      ) : (
+        <div class="game-page-shell">
+          <div class="menu-backdrop" aria-hidden="true"></div>
+          <Header />
+          <slot />
+          <Footer />
+        </div>
+      )
+    }
   </body>
 </html>

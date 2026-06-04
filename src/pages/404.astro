@@ -1,13 +1,16 @@
 ---
-import BaseLayout from "@/components/BaseLayout.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="Page Not Found" description="The page you were looking for could not be found.">
-  <main class="page-fallback">
-    <section>
-      <h1>File Not Found</h1>
-      <p>The shortcut may have moved, or the address may have taken a wrong turn.</p>
-      <p><a href="/">Return to KevinOS</a></p>
+  <main class="page game-content-page">
+    <section class="container page-heading game-panel hero-panel">
+      <p class="eyebrow">404</p>
+      <h1>Nothing lives here yet.</h1>
     </section>
+    <div class="container">
+      <p class="page-subtitle">The page may have moved, or the address may have taken a wrong turn.</p>
+      <p><a class="button-link" href="/">Return home</a></p>
+    </div>
   </main>
 </BaseLayout>
