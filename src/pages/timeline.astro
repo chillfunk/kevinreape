@@ -1,0 +1,25 @@
+---
+import BaseLayout from "@/components/BaseLayout.astro";
+import TimelineItem from "@/components/TimelineItem.astro";
+import { timelineItems } from "@/data/timeline";
+---
+
+<BaseLayout
+  title="Timeline"
+  description="Important life, work, writing, and project milestones from Kevin Reape."
+>
+  <main class="page">
+    <section class="container hero">
+      <div>
+        <p class="eyebrow">Timeline</p>
+        <h1>Milestones with room to breathe.</h1>
+        <p class="hero-copy">
+          A simple, editable timeline for the important work, life, and project moments that should not be buried in a folder.
+        </p>
+      </div>
+    </section>
+    <section class="container timeline" aria-label="Milestones">
+      {timelineItems.map((item) => <TimelineItem item={item} />)}
+    </section>
+  </main>
+</BaseLayout>

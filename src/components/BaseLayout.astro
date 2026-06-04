@@ -1,0 +1,55 @@
+---
+import SiteHeader from "./SiteHeader.astro";
+import "../styles/global.css";
+
+type Props = {
+  title?: string;
+  description?: string;
+  image?: string;
+};
+
+const {
+  title = "Kevin Reape",
+  description = "Notes, essays, projects, and traces from Kevin Reape.",
+  image = "/og-default.png"
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://kevinreape.com");
+const pageTitle = title === "Kevin Reape" ? title : `${title} | Kevin Reape`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(image, canonical)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, canonical)} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <SiteHeader />
+      <slot />
+      <footer class="footer">
+        <div class="container">
+          <span>&copy; {new Date().getFullYear()} Kevin Reape. Built with Astro.</span>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
