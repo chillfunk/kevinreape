@@ -3,9 +3,9 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import MediaCard from "@/components/MediaCard.astro";
 import { mediaItems } from "@/data/media";
 
-const sortedItems = [...mediaItems].sort((a, b) => b.date.localeCompare(a.date));
-const watchingItems = sortedItems.filter((item) => item.type === "watching");
-const readingItems = sortedItems.filter((item) => item.type === "reading");
+const screenItems = mediaItems.filter((item) => item.category === "screen");
+const shelfItems = mediaItems.filter((item) => item.category === "shelf");
+const holdItems = mediaItems.filter((item) => item.category === "hold");
 ---
 
 <BaseLayout title="Watching & Reading" description="Things Kevin is watching, reading, listening to, playing, or thinking about.">
@@ -18,20 +18,26 @@ const readingItems = sortedItems.filter((item) => item.type === "reading");
       <section class="media-columns">
         <div>
           <div class="page-heading section-heading">
-            <p class="eyebrow">Watching</p>
             <h2>On screen.</h2>
           </div>
           <div class="media-list">
-            {watchingItems.map((item) => <MediaCard item={item} />)}
+            {screenItems.map((item) => <MediaCard item={item} />)}
           </div>
         </div>
         <div>
           <div class="page-heading section-heading">
-            <p class="eyebrow">Reading</p>
-            <h2>On deck.</h2>
+            <h2>On shelf.</h2>
           </div>
           <div class="media-list">
-            {readingItems.map((item) => <MediaCard item={item} />)}
+            {shelfItems.map((item) => <MediaCard item={item} />)}
+          </div>
+        </div>
+        <div>
+          <div class="page-heading section-heading">
+            <h2>On hold.</h2>
+          </div>
+          <div class="media-list">
+            {holdItems.map((item) => <MediaCard item={item} />)}
           </div>
         </div>
       </section>

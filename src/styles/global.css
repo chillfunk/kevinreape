@@ -10,6 +10,7 @@
   --accent: #d7b46a;
   --accent-2: #aeb7c2;
   --accent-3: #b8a0cf;
+  --danger-red: #ff5a5f;
   --mission-green: #41eeb0;
   --paper: #f7f1e8;
   --paper-ink: #171a22;
@@ -126,18 +127,35 @@ img {
 
 .game-logo span {
   color: rgba(255, 255, 255, 0.72);
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.72);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.18em;
 }
 
 .game-logo strong {
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", var(--font-sans);
   font-size: clamp(2rem, 4vw, 3.9rem);
   font-style: italic;
   letter-spacing: 0.02em;
   line-height: 0.9;
   text-shadow: 0 3px 0 rgba(0, 0, 0, 0.28);
+}
+
+.game-logo:hover span,
+.game-logo:hover strong,
+.game-logo:focus-visible span,
+.game-logo:focus-visible strong {
+  color: var(--danger-red);
+  -webkit-text-fill-color: var(--danger-red);
+  -webkit-text-stroke: 0.25px var(--danger-red);
+}
+
+.game-logo:hover strong,
+.game-logo:focus-visible strong {
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.36);
 }
 
 .compact-logo strong {
@@ -482,6 +500,13 @@ h3 {
   font-size: 1.08rem;
 }
 
+h3 span {
+  margin-left: 0.45em;
+  color: rgba(245, 245, 238, 0.68);
+  font-size: 0.88em;
+  font-weight: 500;
+}
+
 p {
   color: var(--muted);
 }
@@ -781,8 +806,8 @@ p {
 
 .media-columns {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
 }
 
 .note-card {

@@ -5,13 +5,14 @@ type Props = { item: MediaItem };
 const { item } = Astro.props;
 ---
 
-<article class="media-card">
-  <p class="card-meta">{item.type} / {item.status}</p>
-  <h3>{item.title}</h3>
-  <p>{item.thoughts}</p>
-  <div class="card-row">
-    <span>{item.date}</span>
-    {item.rating && <strong>{item.rating}</strong>}
-    {item.link && <a href={item.link}>Link</a>}
-  </div>
-</article>
+{
+  item.link ? (
+    <a class="media-card" href={item.link} target="_blank" rel="noreferrer">
+      <h3>{item.title}{item.season && <span>{item.season}</span>}</h3>
+    </a>
+  ) : (
+    <article class="media-card">
+      <h3>{item.title}{item.season && <span>{item.season}</span>}</h3>
+    </article>
+  )
+}
