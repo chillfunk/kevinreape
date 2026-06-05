@@ -1,38 +1,25 @@
-export type PhotoItem = {
+export type PhotoMetadata = {
   id: string;
   src: string;
   title: string;
   date: string;
   description?: string;
-  tags: string[];
+  tags?: string[];
 };
 
-// Add photos by placing image files in public/photos, then adding metadata here.
-// Real photos can be .jpg, .png, .webp, or .avif. Use newest items first.
-// Example src: "/photos/my-image.jpg".
-export const photos: PhotoItem[] = [
+export type PhotoItem = PhotoMetadata;
+
+// Add real photo files to public/images/photos.
+// Allowed formats: .jpg, .jpeg, .png, .webp, .gif.
+// Metadata is optional. Photos appear automatically from the folder.
+// Add an entry here only when you want a custom title, date, caption, or tags.
+// Match src to the public URL, for example: /images/photos/file-name.jpg.
+export const photoMetadata: PhotoMetadata[] = [
   {
-    id: "st-louis-light",
-    src: "/photos/st-louis-light.svg",
-    title: "St. Louis Light",
+    id: "download",
+    src: "/images/photos/download.jpg",
+    title: "Model Photo",
     date: "2026",
-    description: "Placeholder metadata for a future city, travel, or life image.",
-    tags: ["place", "memory"]
-  },
-  {
-    id: "workspace-snapshot",
-    src: "/photos/workspace-snapshot.svg",
-    title: "Workspace Snapshot",
-    date: "2026",
-    description: "Placeholder metadata for a desk, studio, or project-in-progress image.",
-    tags: ["workspace", "process"]
-  },
-  {
-    id: "weekend-field-note",
-    src: "/photos/weekend-field-note.svg",
-    title: "Weekend Field Note",
-    date: "2026",
-    description: "Placeholder metadata for an everyday moment worth keeping.",
-    tags: ["personal", "field note"]
+    description: "Photo metadata can be edited in src/data/photos.ts."
   }
 ];

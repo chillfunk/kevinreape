@@ -6,6 +6,16 @@ import PostCard from "@/components/PostCard.astro";
 const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
+
+const getExcerpt = (body: string) =>
+  body
+    .replace(/^---[\s\S]*?---/, "")
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/[#>*_`[\]()]/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 260)
+    .replace(/\s+\S*$/, "");
 ---
 
 <BaseLayout title="Blog" description="Markdown posts from Kevin Reape.">
@@ -15,8 +25,8 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
         <p class="eyebrow">Blog</p>
         <h1>Mission logs.</h1>
       </header>
-      <section class="grid">
-        {posts.map((post) => <PostCard post={post} />)}
+      <section class="blog-grid">
+        {posts.map((post) => <PostCard post={post} excerpt={getExcerpt(post.body)} />)}
       </section>
     </div>
   </main>

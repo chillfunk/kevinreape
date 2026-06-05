@@ -147,7 +147,7 @@ img {
 .game-profile {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 11px;
   border: 1px solid rgba(255, 255, 255, 0.22);
   padding: 5px 8px;
   background: rgba(7, 11, 14, 0.55);
@@ -163,6 +163,21 @@ img {
   background: #1fa8ff;
   color: #ffffff;
   font-weight: 800;
+}
+
+.game-profile strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.game-profile strong::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--mission-green);
+  box-shadow: 0 0 8px rgba(65, 238, 176, 0.95);
+  content: "";
 }
 
 .game-menu {
@@ -534,6 +549,12 @@ p {
   gap: 14px;
 }
 
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
 .section-card,
 .post-card,
 .photo-card,
@@ -575,6 +596,27 @@ p {
   text-transform: uppercase;
 }
 
+.blog-grid .post-card {
+  min-height: 260px;
+  align-content: start;
+  gap: 12px;
+}
+
+.blog-grid .post-card h3 {
+  font-size: 1.32rem;
+}
+
+.post-description {
+  margin: 0;
+  color: rgba(245, 245, 238, 0.78);
+}
+
+.post-excerpt {
+  margin: 0;
+  color: rgba(245, 245, 238, 0.64);
+  font-size: 0.9rem;
+}
+
 .tag-list {
   display: flex;
   flex-wrap: wrap;
@@ -597,22 +639,127 @@ p {
 
 .photo-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .photo-card {
+  position: relative;
   overflow: hidden;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
 }
 
 .photo-card img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1;
   object-fit: cover;
+  transition: filter 160ms ease, transform 160ms ease;
 }
 
-.photo-card div {
-  padding: 14px;
+.photo-card-title {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 28px 10px 9px;
+  background: linear-gradient(0deg, rgba(3, 7, 10, 0.78), transparent);
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.photo-card:hover img,
+.photo-card:focus-visible img {
+  filter: saturate(1.02) contrast(1.12);
+  transform: scale(1.025);
+}
+
+.photo-card:hover .photo-card-title,
+.photo-card:focus-visible .photo-card-title {
+  opacity: 1;
+}
+
+.photo-card:focus-visible {
+  outline: 2px solid var(--mission-green);
+  outline-offset: 3px;
+}
+
+.photo-card-title h3 {
+  font-size: 0.86rem;
+}
+
+.photo-dialog {
+  width: min(980px, calc(100% - 28px));
+  max-height: calc(100dvh - 32px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-left: 5px solid var(--mission-green);
+  padding: 0;
+  background: rgba(8, 13, 15, 0.96);
+  color: var(--ink);
+}
+
+.photo-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(4px);
+}
+
+.photo-dialog-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 7px 10px;
+  background: rgba(7, 11, 14, 0.8);
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.photo-dialog figure {
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+
+.photo-dialog img {
+  width: 100%;
+  max-height: 72dvh;
+  object-fit: contain;
+  background: #030608;
+}
+
+.photo-dialog figcaption {
+  display: grid;
+  gap: 6px;
+  padding: 16px 18px 18px;
+}
+
+.photo-dialog h2 {
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+}
+
+.photo-dialog p {
+  margin: 0;
+}
+
+.empty-state {
+  width: min(780px, 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-left: 4px solid var(--mission-green);
+  padding: 18px;
+  background: rgba(7, 12, 14, 0.66);
+}
+
+.empty-state p {
+  margin: 0;
+  color: rgba(245, 245, 238, 0.74);
 }
 
 .photo-card img,
@@ -879,6 +1026,10 @@ p {
 }
 
 @media (max-width: 880px) {
+  html {
+    font-size: 14px;
+  }
+
   .nav-shell,
   .profile-hero,
   .footer-shell {
@@ -888,11 +1039,15 @@ p {
 
   .profile-hero,
   .grid,
-  .photo-grid,
+  .blog-grid,
   .media-columns,
   .roster-summary,
   .roster-row {
     grid-template-columns: 1fr;
+  }
+
+  .photo-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .profile-hero {
@@ -911,32 +1066,45 @@ p {
   .main-menu-screen {
     min-height: 100svh;
     overflow: hidden;
+    background-position: center;
   }
 
   .game-topbar {
+    align-items: flex-start;
     padding: 18px;
   }
 
-  .game-profile {
+  .site-header .game-profile {
     display: none;
+  }
+
+  .main-menu-screen .game-profile {
+    display: flex;
+    padding: 4px 6px;
+    font-size: 0.66rem;
   }
 
   .game-menu {
     position: relative;
     left: auto;
     top: auto;
-    padding: 42px 18px 220px;
+    width: min(520px, calc(100vw - 36px));
+    padding: clamp(28px, 8vh, 62px) 18px 300px;
   }
 
   .game-menu a {
-    font-size: clamp(2.4rem, 13vw, 4rem);
+    display: block;
+    width: min-content;
+    max-width: 100%;
+    font-size: clamp(2.3rem, 12vw, 4rem);
+    overflow-wrap: normal;
   }
 
   .hero-character {
-    right: -38vw;
-    width: 118vw;
-    height: 48vh;
-    opacity: 0.88;
+    right: -50vw;
+    width: 138vw;
+    height: min(48vh, 430px);
+    opacity: 0.82;
   }
 
   .portrait-standin {
@@ -954,15 +1122,205 @@ p {
     right: 18px;
     bottom: 28px;
   }
+
+  .nav-shell {
+    min-height: auto;
+    padding: 16px 0;
+  }
+
+  .nav-links {
+    justify-content: flex-start;
+    margin-left: 0;
+  }
+
+  .nav-links a {
+    transform: none;
+  }
+
+  .page {
+    padding: 30px 0 56px;
+  }
+
+  .game-panel {
+    padding: 22px;
+  }
+
+  .roster-row {
+    gap: 12px;
+  }
+
+  .wargear-list li {
+    max-width: 100%;
+  }
+
+  .wanted-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 620px) {
+  .nav-shell,
+  .footer-shell,
+  .container {
+    width: min(100% - 24px, 1120px);
+  }
+
   .page {
-    padding-top: 40px;
+    padding-top: 24px;
   }
 
   h1 {
-    font-size: clamp(2.2rem, 13vw, 3.4rem);
+    font-size: clamp(2.05rem, 12vw, 3.2rem);
+    overflow-wrap: anywhere;
   }
 
+  h2 {
+    font-size: clamp(1.65rem, 9vw, 2.55rem);
+  }
+
+  .game-topbar {
+    padding: 14px;
+  }
+
+  .game-logo strong {
+    font-size: clamp(1.65rem, 10vw, 2.7rem);
+  }
+
+  .game-logo span,
+  .game-kicker,
+  .eyebrow,
+  .card-meta {
+    font-size: 0.62rem;
+  }
+
+  .main-menu-screen {
+    min-height: 100dvh;
+  }
+
+  .main-menu-screen .game-topbar {
+    gap: 12px;
+  }
+
+  .main-menu-screen .game-profile {
+    flex-shrink: 0;
+  }
+
+  .game-menu {
+    padding: clamp(34px, 10vh, 78px) 14px 250px;
+  }
+
+  .game-menu nav {
+    gap: 6px;
+  }
+
+  .game-menu a {
+    font-size: clamp(2.05rem, 11vw, 3.15rem);
+    line-height: 0.92;
+  }
+
+  .hero-character {
+    right: -64vw;
+    width: 158vw;
+    height: min(40vh, 340px);
+    opacity: 0.7;
+  }
+
+  .character-label {
+    right: 14px;
+    bottom: 18px;
+  }
+
+  .character-label strong {
+    font-size: clamp(1.7rem, 10vw, 2.45rem);
+  }
+
+  .character-label span {
+    font-size: 0.62rem;
+  }
+
+  .site-header.game-topbar {
+    padding: 0;
+  }
+
+  .compact-logo strong {
+    font-size: clamp(1.35rem, 8vw, 2rem);
+  }
+
+  .nav-links {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .nav-links a {
+    display: grid;
+    min-height: 34px;
+    place-items: center;
+    padding: 7px 6px;
+    text-align: center;
+  }
+
+  .nav-links a[href="/watching-reading/"] {
+    grid-column: 1 / -1;
+  }
+
+  .game-panel {
+    border-left-width: 4px;
+    padding: 18px 16px 20px;
+  }
+
+  .game-panel::before {
+    width: 64px;
+    height: 10px;
+  }
+
+  .page-subtitle {
+    font-size: 0.84rem;
+  }
+
+  .roster-summary {
+    gap: 8px;
+  }
+
+  .roster-summary article {
+    padding: 12px;
+  }
+
+  .roster-summary strong {
+    font-size: 1.45rem;
+  }
+
+  .roster-group-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .roster-row {
+    padding: 14px;
+  }
+
+  .wargear-list {
+    display: grid;
+  }
+
+  .media-card,
+  .post-card,
+  .note-card,
+  .wanted-row {
+    padding: 14px;
+  }
+
+  .photo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .photo-card-title {
+    opacity: 1;
+  }
+
+  .footer-shell {
+    gap: 8px;
+  }
 }
