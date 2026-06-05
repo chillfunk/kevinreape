@@ -9,13 +9,7 @@ const { photo } = Astro.props;
   class="photo-card"
   type="button"
   data-photo-src={photo.src}
-  data-photo-title={photo.title}
-  data-photo-date={photo.date}
-  data-photo-description={photo.description ?? ""}
-  aria-label={`Open ${photo.title}`}
+  aria-label="Open photo"
 >
-  <img src={photo.src} alt={photo.title} loading="lazy" />
-  <div class="photo-card-title">
-    <h3>{photo.title}</h3>
-  </div>
+  <img src={photo.src} alt="" loading="lazy" />
 </button>

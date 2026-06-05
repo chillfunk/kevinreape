@@ -256,11 +256,11 @@ img {
 
 .hero-character {
   position: absolute;
-  right: clamp(-130px, -4vw, -36px);
+  right: clamp(-60px, -0.6vw, 8px);
   bottom: 0;
   z-index: 2;
-  width: min(72vw, 1120px);
-  height: min(86vh, 820px);
+  width: min(64.8vw, 1008px);
+  height: min(77.4vh, 738px);
   pointer-events: none;
 }
 
@@ -690,35 +690,15 @@ p {
   transition: filter 160ms ease, transform 160ms ease;
 }
 
-.photo-card-title {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 28px 10px 9px;
-  background: linear-gradient(0deg, rgba(3, 7, 10, 0.78), transparent);
-  opacity: 0;
-  transition: opacity 160ms ease;
-}
-
 .photo-card:hover img,
 .photo-card:focus-visible img {
   filter: saturate(1.02) contrast(1.12);
   transform: scale(1.025);
 }
 
-.photo-card:hover .photo-card-title,
-.photo-card:focus-visible .photo-card-title {
-  opacity: 1;
-}
-
 .photo-card:focus-visible {
   outline: 2px solid var(--mission-green);
   outline-offset: 3px;
-}
-
-.photo-card-title h3 {
-  font-size: 0.86rem;
 }
 
 .photo-dialog {
@@ -765,19 +745,6 @@ p {
   background: #030608;
 }
 
-.photo-dialog figcaption {
-  display: grid;
-  gap: 6px;
-  padding: 16px 18px 18px;
-}
-
-.photo-dialog h2 {
-  font-size: clamp(1.6rem, 4vw, 2.8rem);
-}
-
-.photo-dialog p {
-  margin: 0;
-}
 
 .empty-state {
   width: min(780px, 100%);
@@ -1342,10 +1309,6 @@ p {
 
   .photo-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .photo-card-title {
-    opacity: 1;
   }
 
   .footer-shell {

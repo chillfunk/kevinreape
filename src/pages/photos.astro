@@ -3,11 +3,10 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import PhotoCard from "@/components/PhotoCard.astro";
 import { existsSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
-import { photoMetadata, type PhotoItem } from "@/data/photos";
+import type { PhotoItem } from "@/data/photos";
 
 const allowedPhotoExtensions = /\.(jpe?g|png|webp|gif)$/i;
 const photosDirectory = join(process.cwd(), "public", "images", "photos");
-const metadataBySrc = new Map(photoMetadata.map((photo) => [photo.src, photo]));
 const files = existsSync(photosDirectory)
   ? readdirSync(photosDirectory, { withFileTypes: true }).filter(
       (file) => file.isFile() && allowedPhotoExtensions.test(file.name)
@@ -17,19 +16,12 @@ const files = existsSync(photosDirectory)
 const sortedPhotos: PhotoItem[] = files
   .map((file) => {
     const src = `/images/photos/${encodeURIComponent(file.name)}`;
-    const metadata = metadataBySrc.get(src);
     const stats = statSync(join(photosDirectory, file.name));
-    const fallbackTitle = file.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ");
-    const fallbackDate = stats.mtime.toISOString().slice(0, 10);
 
     return {
-      id: metadata?.id ?? file.name,
+      id: file.name,
       src,
-      title: metadata?.title ?? fallbackTitle,
-      date: metadata?.date ?? fallbackDate,
-      description: metadata?.description,
-      tags: metadata?.tags,
-      sortDate: metadata?.date ?? stats.mtime.toISOString()
+      sortDate: stats.mtime.toISOString()
     };
   })
   .sort((a, b) => b.sortDate.localeCompare(a.sortDate));
@@ -42,7 +34,6 @@ const sortedPhotos: PhotoItem[] = files
         <p class="eyebrow">Photos</p>
         <h1>Visual archive.</h1>
       </header>
-      <p class="page-subtitle">Images live in <code>public/images/photos</code> with optional metadata in <code>src/data/photos.ts</code>.</p>
       {
         sortedPhotos.length > 0 ? (
           <section class="photo-grid">
@@ -59,11 +50,6 @@ const sortedPhotos: PhotoItem[] = files
         <button class="photo-dialog-close" type="button" aria-label="Close photo viewer">Close</button>
         <figure>
           <img data-photo-dialog-image alt="" />
-          <figcaption>
-            <p class="card-meta" data-photo-dialog-date></p>
-            <h2 data-photo-dialog-title></h2>
-            <p data-photo-dialog-description></p>
-          </figcaption>
         </figure>
       </dialog>
     </div>
@@ -72,9 +58,6 @@ const sortedPhotos: PhotoItem[] = files
   <script>
     const dialog = document.querySelector(".photo-dialog");
     const dialogImage = document.querySelector("[data-photo-dialog-image]");
-    const dialogTitle = document.querySelector("[data-photo-dialog-title]");
-    const dialogDate = document.querySelector("[data-photo-dialog-date]");
-    const dialogDescription = document.querySelector("[data-photo-dialog-description]");
     const closeButton = document.querySelector(".photo-dialog-close");
 
     document.querySelectorAll(".photo-card").forEach((card) => {
@@ -82,15 +65,8 @@ const sortedPhotos: PhotoItem[] = files
         if (!(dialog instanceof HTMLDialogElement) || !(dialogImage instanceof HTMLImageElement)) return;
 
         const src = card.getAttribute("data-photo-src") ?? "";
-        const title = card.getAttribute("data-photo-title") ?? "";
-        const date = card.getAttribute("data-photo-date") ?? "";
-        const description = card.getAttribute("data-photo-description") ?? "";
 
         dialogImage.src = src;
-        dialogImage.alt = title;
-        if (dialogTitle) dialogTitle.textContent = title;
-        if (dialogDate) dialogDate.textContent = date;
-        if (dialogDescription) dialogDescription.textContent = description;
         dialog.showModal();
       });
     });
