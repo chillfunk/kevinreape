@@ -61,6 +61,7 @@ export const warhammer = {
     { name: "Land Raider", category: "Vehicle", points: 220, count: "1x", assemblyStatus: "TBD", paintingStatus: "TBD" },
     { name: "Redemptor Dreadnought", category: "Vehicle", points: 205, count: "1x", assemblyStatus: "TBD", paintingStatus: "TBD" },
     { name: "Vindicator", category: "Vehicle", points: 185, count: "1x", assemblyStatus: "Built", paintingStatus: "TBD" },
+    { name: "Impulsor", category: "Dedicated Transport", points: 85, count: "1x", assemblyStatus: "Built", paintingStatus: "TBD" },
     { name: "Razorback", category: "Dedicated Transport", points: 95, count: "1x", assemblyStatus: "Built", paintingStatus: "TBD" }
   ] satisfies WarhammerUnit[],
   wantedItems: [

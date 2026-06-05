@@ -93,7 +93,6 @@ const getStatusTags = (unit: WarhammerUnit) => {
           {warhammer.wantedItems.map((item) => (
             <article class="wanted-row">
               <div>
-                <p class="card-meta">{item.priority} priority</p>
                 <h3>{item.name}</h3>
                 {item.notes && <p>{item.notes}</p>}
               </div>
