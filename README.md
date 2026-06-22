@@ -1,4 +1,4 @@
-# kevinreape.com
+# chillfunk.com
 
 A fast, polished personal blog built with Astro, Markdown content, and a small session-only door intro.
 
