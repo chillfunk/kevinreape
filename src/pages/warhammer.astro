@@ -1,13 +1,13 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { armies, hobbyRotation, removedModels, type HobbyStatus } from "@/data/warhammer";
+import { armies, type HobbyStatus } from "@/data/warhammer";
 
 const modelCount = (army: (typeof armies)[number]) => army.units.reduce((sum, unit) => sum + unit.count, 0);
 const statusCount = (army: (typeof armies)[number], status: HobbyStatus) =>
-  army.units.filter((unit) => (unit.status ?? "Backlog") === status).reduce((sum, unit) => sum + unit.count, 0);
+  army.units.filter((unit) => (unit.status ?? "Unassembled") === status).reduce((sum, unit) => sum + unit.count, 0);
 const totalModels = armies.reduce((sum, army) => sum + modelCount(army), 0);
 const totalPainted = armies.reduce((sum, army) => sum + statusCount(army, "Painted"), 0);
-const totalStarted = armies.reduce((sum, army) => sum + statusCount(army, "In progress"), 0);
+const totalStarted = armies.reduce((sum, army) => sum + army.units.filter((unit) => unit.onDesk).reduce((count, unit) => count + unit.count, 0), 0);
 const paintedPercent = Math.round((totalPainted / totalModels) * 100);
 const categories = ["Characters", "Infantry", "Vehicles"] as const;
 ---
@@ -19,7 +19,6 @@ const categories = ["Characters", "Infantry", "Vehicles"] as const;
         <div>
           <p class="eyebrow">Collection command // 03 active forces</p>
           <h1>The War Room</h1>
-          <p>One collection. Three very different ways to make poor tactical decisions with confidence.</p>
         </div>
         <div class="command-seal" aria-hidden="true"><span>40</span><small>K</small></div>
       </header>
@@ -28,7 +27,7 @@ const categories = ["Characters", "Infantry", "Vehicles"] as const;
         <article><span>Collection</span><strong>{totalModels}</strong><small>models tracked</small></article>
         <article><span>Painted</span><strong>{totalPainted}</strong><small>{paintedPercent}% complete</small></article>
         <article><span>On the desk</span><strong>{totalStarted}</strong><small>Emperor’s Champion</small></article>
-        <article class="focus-stat"><span>Current directive</span><strong>Templars first</strong><small>Build a clean 1,000-point core before buying deep</small></article>
+        <article class="focus-stat"><span>Current directive</span><strong>Black Templars</strong><small>Clean 1,500 points built</small></article>
       </section>
 
       <div class="overall-progress" aria-label={`${paintedPercent}% of collection painted`}>
@@ -45,7 +44,7 @@ const categories = ["Characters", "Infantry", "Vehicles"] as const;
         {armies.map((army, index) => {
           const total = modelCount(army);
           const painted = statusCount(army, "Painted");
-          const started = statusCount(army, "In progress");
+          const built = statusCount(army, "Built");
           const percent = Math.round((painted / total) * 100);
           return (
             <article class={`army-card army-${army.id}`} data-army={army.id} style={`--army-accent: ${army.accent}`}>
@@ -57,7 +56,7 @@ const categories = ["Characters", "Infantry", "Vehicles"] as const;
               <p class="army-role">{army.role}</p>
               <p class="army-theme">{army.theme}</p>
               <div class="army-meter">
-                <div><span>{painted} painted · {started} active</span><b>{percent}%</b></div>
+                <div><span>{painted} painted · {built} built</span><b>{percent}%</b></div>
                 <div class="progress-track"><i style={`width: ${percent}%`}></i></div>
               </div>
               <dl>
@@ -70,7 +69,7 @@ const categories = ["Characters", "Infantry", "Vehicles"] as const;
       </section>
 
       <section class="dashboard-section manifest-section">
-        <header class="dashboard-heading"><div><p class="eyebrow">The manifest</p><h2>Everything on the shelf.</h2></div><p>Paint status and provenance at a glance.</p></header>
+        <header class="dashboard-heading"><div><p class="eyebrow">The manifest</p><h2>Everything on the shelf.</h2></div><div class="status-key" aria-label="Model status key"><span><i class="status-dot status-painted"></i> Painted</span><span><i class="status-dot status-built"></i> Built</span><span><i class="status-dot status-unassembled"></i> Unassembled</span></div></header>
         <div class="army-manifests">
           {armies.map((army) => (
             <article class="army-manifest" data-army={army.id} style={`--army-accent: ${army.accent}`}>
@@ -84,7 +83,7 @@ const categories = ["Characters", "Infantry", "Vehicles"] as const;
                       <h4>{category}<span>{count}</span></h4>
                       <ul>
                         {units.map((unit) => {
-                          const status = unit.status ?? "Backlog";
+                          const status = unit.status ?? "Unassembled";
                           return (
                             <li>
                               <span class={`status-dot status-${status.toLowerCase().replace(" ", "-")}`} title={status}></span>
@@ -104,18 +103,11 @@ const categories = ["Characters", "Infantry", "Vehicles"] as const;
       </section>
 
       <section class="dashboard-section planning-grid">
-        <article class="priority-panel">
-          <p class="eyebrow">Hobby rotation</p><h2>Keep the momentum moving.</h2>
-          <ol>{hobbyRotation.map((step, index) => <li class={index === 0 ? "is-current" : ""}><span>0{index + 1}</span><p>{step}{index === 0 && <small>Current objective</small>}</p></li>)}</ol>
-        </article>
         <article class="wishlist-panel">
           <p class="eyebrow">Reinforcement queue</p><h2>Future acquisitions.</h2>
-          {armies.map((army) => <section data-army={army.id}><h3 style={`--army-accent: ${army.accent}`}>{army.name}</h3><ul>{army.wanted.map((item) => <li>{item}</li>)}</ul></section>)}
-          <p class="buy-rule">Hold the line: avoid major buys until the Black Templars have a painted 1,000-point force.</p>
+          <div class="acquisition-columns">{armies.map((army) => <section data-army={army.id}><h3 style={`--army-accent: ${army.accent}`}>{army.name}</h3><ul>{army.wanted.map((item) => <li>{item}</li>)}</ul></section>)}</div>
         </article>
       </section>
-
-      <details class="removed-panel"><summary>Removed / not counted <span>{removedModels.length}</span></summary><ul>{removedModels.map((model) => <li><strong>{model.name}</strong><span>{model.reason}</span></li>)}</ul></details>
     </div>
   </main>
 
