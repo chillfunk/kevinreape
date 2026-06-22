@@ -3,44 +3,57 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import MediaCard from "@/components/MediaCard.astro";
 import { mediaItems } from "@/data/media";
 
-const screenItems = mediaItems.filter((item) => item.category === "screen");
-const shelfItems = mediaItems.filter((item) => item.category === "shelf");
-const holdItems = mediaItems.filter((item) => item.category === "hold");
+const lanes = [
+  { id: "screen", number: "01", title: "Watching", note: "On screen now" },
+  { id: "shelf", number: "02", title: "Reading", note: "Bookmarks everywhere" },
+  { id: "play", number: "03", title: "Playing", note: "Current rotation" },
+  { id: "hold", number: "04", title: "Waiting", note: "Paused or up next" }
+] as const;
+
+const activeCount = mediaItems.filter((item) => item.category !== "hold").length;
+const waitingCount = mediaItems.filter((item) => item.category === "hold").length;
+const gameCount = mediaItems.filter((item) => item.category === "play").length;
 ---
 
-<BaseLayout title="Watching & Reading" description="Things Kevin is watching, reading, listening to, playing, or thinking about.">
-  <main class="page game-content-page">
+<BaseLayout title="The Queue" description="What Kevin is watching, reading, and playing right now.">
+  <main class="page game-content-page queue-page">
     <div class="container">
-      <header class="page-heading game-panel hero-panel">
-        <p class="eyebrow">Watching & Reading</p>
-        <h1>Current queue.</h1>
+      <header class="queue-hero">
+        <div class="queue-hero-copy">
+          <p class="eyebrow">The Queue // currently in rotation</p>
+          <h1>Watch. Read. Play.</h1>
+          <p>The stuff I’m spending time with right now, plus the things waiting for their turn.</p>
+          <dl class="queue-stats">
+            <div><dt>Active</dt><dd>{activeCount}</dd></div>
+            <div><dt>Games</dt><dd>{gameCount}</dd></div>
+            <div><dt>Waiting</dt><dd>{waitingCount}</dd></div>
+          </dl>
+        </div>
       </header>
-      <section class="media-columns">
-        <div>
-          <div class="page-heading section-heading">
-            <h2>Watching.</h2>
-          </div>
-          <div class="media-list">
-            {screenItems.map((item) => <MediaCard item={item} />)}
-          </div>
-        </div>
-        <div>
-          <div class="page-heading section-heading">
-            <h2>Reading.</h2>
-          </div>
-          <div class="media-list">
-            {shelfItems.map((item) => <MediaCard item={item} />)}
-          </div>
-        </div>
-        <div>
-          <div class="page-heading section-heading">
-            <h2>Waiting.</h2>
-          </div>
-          <div class="media-list">
-            {holdItems.map((item) => <MediaCard item={item} />)}
-          </div>
-        </div>
+
+      <section class="queue-board" aria-label="Current media queue">
+        {lanes.map((lane) => {
+          const items = mediaItems.filter((item) => item.category === lane.id);
+          return (
+            <section class={`queue-lane queue-lane-${lane.id}`}>
+              <header>
+                <span>{lane.number}</span>
+                <div><p>{lane.note}</p><h2>{lane.title}</h2></div>
+                <b>{items.length}</b>
+              </header>
+              <div class="media-list">
+                {items.map((item) => <MediaCard item={item} />)}
+              </div>
+            </section>
+          );
+        })}
       </section>
+
+      <aside class="queue-archive">
+        <div><p class="eyebrow">The eventual archive</p><h2>The giant read / watched list.</h2></div>
+        <p>Eventually, every finished book and movie goes here. I’m not entering all of that today.</p>
+        <span aria-hidden="true">COMING LATER</span>
+      </aside>
     </div>
   </main>
 </BaseLayout>

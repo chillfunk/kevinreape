@@ -1,7 +1,7 @@
 export type MediaItem = {
   title: string;
   type: "watching" | "reading" | "listening" | "playing" | "thinking";
-  category: "screen" | "shelf" | "hold";
+  category: "screen" | "shelf" | "play" | "hold";
   status: "current" | "finished" | "paused" | "want to start";
   season?: string;
   thoughts?: string;
@@ -15,7 +15,7 @@ export const mediaItems: MediaItem[] = [
     title: "Friends & Neighbors",
     type: "watching",
     category: "hold",
-    status: "current",
+    status: "want to start",
     season: "S.3",
     link: "https://tv.apple.com/us/show/your-friends--neighbors/umc.cmc.74o37kzay0yuuub8iumddjsg"
   },
@@ -55,5 +55,19 @@ export const mediaItems: MediaItem[] = [
     category: "shelf",
     status: "current",
     link: "https://www.goodreads.com/book/show/1022854.Dune"
+  },
+  {
+    title: "PUBG: Battlegrounds",
+    type: "playing",
+    category: "play",
+    status: "current",
+    link: "https://pubg.com/"
+  },
+  {
+    title: "Overwatch 2",
+    type: "playing",
+    category: "play",
+    status: "current",
+    link: "https://overwatch.blizzard.com/"
   }
 ];

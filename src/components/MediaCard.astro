@@ -3,16 +3,27 @@ import type { MediaItem } from "@/data/media";
 
 type Props = { item: MediaItem };
 const { item } = Astro.props;
+const statusLabel = {
+  current: "In rotation",
+  finished: "Finished",
+  paused: "Paused",
+  "want to start": "Up next"
+}[item.status];
 ---
 
 {
   item.link ? (
-    <a class="media-card" href={item.link} target="_blank" rel="noreferrer">
-      <h3>{item.title}{item.season && <span>{item.season}</span>}</h3>
+    <a class={`media-card queue-item queue-item-${item.type}`} href={item.link} target="_blank" rel="noreferrer">
+      <p class="queue-item-meta"><span>{statusLabel}</span>{item.season && <b>{item.season}</b>}</p>
+      <h3>{item.title}</h3>
+      {item.thoughts && <p>{item.thoughts}</p>}
+      <span class="queue-item-arrow" aria-hidden="true">↗</span>
     </a>
   ) : (
-    <article class="media-card">
-      <h3>{item.title}{item.season && <span>{item.season}</span>}</h3>
+    <article class={`media-card queue-item queue-item-${item.type}`}>
+      <p class="queue-item-meta"><span>{statusLabel}</span>{item.season && <b>{item.season}</b>}</p>
+      <h3>{item.title}</h3>
+      {item.thoughts && <p>{item.thoughts}</p>}
     </article>
   )
 }
