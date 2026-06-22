@@ -951,6 +951,183 @@ p {
   padding: 42px 0 0;
 }
 
+/* Warhammer collection dashboard */
+.war-dashboard {
+  --war-paper: #e7e2d5;
+  --war-dim: rgba(231, 226, 213, 0.62);
+  padding-top: 28px;
+}
+
+.war-dashboard .container {
+  width: min(1180px, calc(100% - 36px));
+}
+
+.war-command {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 230px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-left: 6px solid #b51f2e;
+  padding: clamp(28px, 5vw, 62px);
+  background:
+    linear-gradient(90deg, rgba(5, 7, 8, 0.96), rgba(8, 10, 11, 0.76)),
+    url("/images/photos/warhammer-miniatures.jpg") center 45% / cover;
+}
+
+.war-command::after {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(135deg, transparent 0 18px, rgba(255, 255, 255, 0.018) 18px 19px);
+  content: "";
+  pointer-events: none;
+}
+
+.war-command > div:first-child { position: relative; z-index: 1; max-width: 750px; }
+.war-command h1,
+.dashboard-heading h2,
+.priority-panel h2,
+.wishlist-panel h2 {
+  margin: 4px 0 8px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", var(--font-sans);
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: 0.015em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+.war-command h1 { font-size: clamp(3.4rem, 8vw, 7.6rem); }
+.war-command p:last-child { max-width: 590px; margin: 0; color: var(--war-dim); }
+
+.command-seal {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 108px;
+  height: 108px;
+  flex: 0 0 auto;
+  place-content: center;
+  border: 2px solid rgba(231, 226, 213, 0.7);
+  outline: 1px solid rgba(231, 226, 213, 0.25);
+  outline-offset: 7px;
+  color: var(--war-paper);
+  text-align: center;
+  transform: rotate(3deg);
+}
+.command-seal span { font-family: Impact, sans-serif; font-size: 3.2rem; line-height: 0.8; }
+.command-seal small { font-weight: 900; letter-spacing: 0.5em; transform: translateX(0.25em); }
+
+.collection-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(120px, 0.7fr)) minmax(260px, 1.6fr);
+  border-inline: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+.collection-stats article { display: grid; gap: 2px; min-height: 118px; align-content: center; padding: 18px 22px; background: rgba(5, 9, 10, 0.74); }
+.collection-stats article + article { border-left: 1px solid rgba(255, 255, 255, 0.12); }
+.collection-stats span, .collection-stats small { color: var(--war-dim); font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+.collection-stats strong { color: #fff; font-family: Impact, sans-serif; font-size: 2.5rem; font-style: italic; line-height: 1; text-transform: uppercase; }
+.collection-stats .focus-stat { border-top: 3px solid #b51f2e; background: linear-gradient(120deg, rgba(181, 31, 46, 0.13), rgba(5, 9, 10, 0.8)); }
+.collection-stats .focus-stat strong { font-size: 1.65rem; }
+
+.overall-progress { display: grid; gap: 8px; margin: 22px 0 28px; }
+.overall-progress > div:first-child, .army-meter > div:first-child { display: flex; justify-content: space-between; gap: 16px; color: var(--war-dim); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+.progress-track { height: 6px; overflow: hidden; background: rgba(255, 255, 255, 0.09); }
+.progress-track i { display: block; height: 100%; background: #b51f2e; box-shadow: 0 0 16px rgba(181, 31, 46, 0.65); }
+
+.army-switcher { display: flex; gap: 7px; margin-bottom: 14px; overflow-x: auto; }
+.army-switcher button { border: 1px solid rgba(255, 255, 255, 0.16); padding: 10px 14px; background: rgba(5, 9, 10, 0.66); color: var(--war-dim); font: inherit; font-size: 0.72rem; font-weight: 900; letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
+.army-switcher button span { margin-left: 8px; color: rgba(255,255,255,.35); }
+.army-switcher button:hover, .army-switcher button.is-active { border-color: #b51f2e; background: rgba(181, 31, 46, 0.14); color: #fff; }
+
+.army-overview { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.army-card { position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.14); border-top: 4px solid var(--army-accent); padding: 21px; background: linear-gradient(150deg, color-mix(in srgb, var(--army-accent) 9%, transparent), rgba(5, 9, 10, 0.82) 48%); }
+.army-card::after { position: absolute; right: -12px; bottom: -36px; color: color-mix(in srgb, var(--army-accent) 8%, transparent); font-family: Impact, sans-serif; font-size: 9rem; content: attr(data-army); text-transform: uppercase; white-space: nowrap; pointer-events: none; }
+.army-card > * { position: relative; z-index: 1; }
+.army-card header { display: grid; grid-template-columns: auto 1fr auto; align-items: start; gap: 12px; }
+.army-index { color: var(--army-accent); font-family: Impact, sans-serif; font-size: 1.4rem; font-style: italic; }
+.army-card header p { margin: 1px 0 3px; color: var(--war-dim); font-size: 0.61rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+.army-card h2 { margin: 0; font-family: Impact, sans-serif; font-size: 1.8rem; font-style: italic; line-height: 1; text-transform: uppercase; }
+.army-monogram { display: grid; width: 36px; height: 36px; place-items: center; border: 1px solid color-mix(in srgb, var(--army-accent) 50%, transparent); color: var(--army-accent); font-size: 0.65rem; font-weight: 900; }
+.army-role { margin: 23px 0 5px; color: #fff; font-weight: 800; }
+.army-theme { min-height: 68px; margin: 0; color: var(--war-dim); font-size: 0.82rem; }
+.army-meter { display: grid; gap: 6px; margin: 20px 0; }
+.army-meter .progress-track i { background: var(--army-accent); box-shadow: 0 0 16px color-mix(in srgb, var(--army-accent) 55%, transparent); }
+.army-card dl { display: grid; grid-template-columns: 0.55fr 1.45fr; margin: 0; border-top: 1px solid rgba(255,255,255,.11); }
+.army-card dl div { padding-top: 13px; }
+.army-card dt { color: var(--war-dim); font-size: .62rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+.army-card dd { margin: 3px 0 0; font-size: .8rem; font-weight: 700; }
+
+.dashboard-section { margin-top: 58px; }
+.dashboard-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 18px; }
+.dashboard-heading h2, .priority-panel h2, .wishlist-panel h2 { font-size: clamp(2rem, 4vw, 3.5rem); }
+.dashboard-heading > p { max-width: 300px; margin: 0 0 4px; color: var(--war-dim); font-size: .8rem; text-align: right; }
+.army-manifests { display: grid; gap: 14px; }
+.army-manifest { border: 1px solid rgba(255,255,255,.14); border-left: 5px solid var(--army-accent); background: rgba(5,9,10,.72); }
+.army-manifest > header { display: flex; align-items: center; justify-content: space-between; gap: 18px; border-bottom: 1px solid rgba(255,255,255,.11); padding: 13px 17px; background: color-mix(in srgb, var(--army-accent) 6%, transparent); }
+.army-manifest > header div { display: flex; align-items: center; gap: 11px; }
+.army-manifest > header span { display: grid; width: 32px; height: 32px; place-items: center; border: 1px solid color-mix(in srgb, var(--army-accent) 45%, transparent); color: var(--army-accent); font-size: .6rem; font-weight: 900; }
+.army-manifest > header h3 { margin: 0; font-family: Impact, sans-serif; font-size: 1.35rem; font-style: italic; text-transform: uppercase; }
+.army-manifest > header b { color: var(--war-dim); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; }
+.manifest-columns { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); }
+.manifest-category { padding: 16px; }
+.manifest-category + .manifest-category { border-left: 1px solid rgba(255,255,255,.1); }
+.manifest-category h4 { display: flex; justify-content: space-between; margin: 0 0 10px; color: var(--army-accent); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; }
+.manifest-category h4 span { color: var(--war-dim); }
+.manifest-category ul { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+.manifest-category li { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 9px; min-height: 43px; border-top: 1px solid rgba(255,255,255,.07); padding: 6px 0; }
+.manifest-category li > div { display: grid; }
+.manifest-category li strong { font-size: .78rem; line-height: 1.2; }
+.manifest-category li small { margin-top: 2px; color: var(--war-dim); font-size: .62rem; }
+.manifest-category li > b { color: var(--war-dim); font-family: ui-monospace, monospace; font-size: .68rem; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.22); }
+.status-painted { background: #56d69b; box-shadow: 0 0 7px rgba(86,214,155,.7); }
+.status-in-progress { background: #e6a83c; box-shadow: 0 0 7px rgba(230,168,60,.7); }
+
+.planning-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 14px; }
+.priority-panel, .wishlist-panel { border: 1px solid rgba(255,255,255,.14); padding: clamp(20px, 3vw, 30px); background: rgba(5,9,10,.72); }
+.priority-panel ol { display: grid; gap: 0; margin: 24px 0 0; padding: 0; list-style: none; }
+.priority-panel li { display: grid; grid-template-columns: 44px 1fr; align-items: center; gap: 12px; border-top: 1px solid rgba(255,255,255,.09); padding: 13px 0; color: var(--war-dim); }
+.priority-panel li > span { font-family: Impact, sans-serif; font-size: 1.4rem; font-style: italic; }
+.priority-panel li p { display: grid; margin: 0; }
+.priority-panel li small { color: #d84b59; font-size: .58rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+.priority-panel li.is-current { color: #fff; }
+.priority-panel li.is-current > span { color: #d84b59; }
+.wishlist-panel section { display: grid; grid-template-columns: 150px 1fr; gap: 18px; border-top: 1px solid rgba(255,255,255,.09); padding: 13px 0; }
+.wishlist-panel h3 { margin: 0; color: var(--army-accent); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+.wishlist-panel ul { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.wishlist-panel li { border: 1px solid rgba(255,255,255,.12); padding: 4px 7px; color: var(--war-dim); font-size: .7rem; }
+.buy-rule { border-left: 3px solid #b51f2e; margin: 18px 0 0; padding: 10px 13px; background: rgba(181,31,46,.08); color: var(--war-dim); font-size: .76rem; }
+.removed-panel { margin-top: 14px; border: 1px solid rgba(255,255,255,.1); background: rgba(5,9,10,.48); color: var(--war-dim); }
+.removed-panel summary { padding: 12px 16px; font-size: .7rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+.removed-panel summary span { float: right; }
+.removed-panel ul { display: grid; gap: 8px; margin: 0; padding: 0 16px 14px; list-style: none; }
+.removed-panel li { display: flex; justify-content: space-between; gap: 20px; font-size: .72rem; }
+.removed-panel li strong { color: #fff; }
+
+@media (max-width: 900px) {
+  .collection-stats { grid-template-columns: repeat(3, 1fr); }
+  .collection-stats .focus-stat { grid-column: 1 / -1; border-left: 0; }
+  .army-overview, .planning-grid { grid-template-columns: 1fr; }
+  .army-theme { min-height: 0; }
+}
+
+@media (max-width: 680px) {
+  .war-dashboard .container { width: min(100% - 24px, 1180px); }
+  .war-command { min-height: 250px; padding: 24px 20px; }
+  .command-seal { display: none; }
+  .collection-stats { grid-template-columns: 1fr 1fr; }
+  .collection-stats article:nth-child(3) { border-top: 1px solid rgba(255,255,255,.12); border-left: 0; }
+  .collection-stats .focus-stat { grid-column: 1 / -1; }
+  .dashboard-heading { align-items: start; flex-direction: column; gap: 4px; }
+  .dashboard-heading > p { text-align: left; }
+  .manifest-columns { grid-template-columns: 1fr; }
+  .manifest-category + .manifest-category { border-top: 1px solid rgba(255,255,255,.1); border-left: 0; }
+  .wishlist-panel section { grid-template-columns: 1fr; gap: 7px; }
+}
+
 .prose {
   max-width: 700px;
 }

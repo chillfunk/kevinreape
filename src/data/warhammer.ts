@@ -1,73 +1,123 @@
+export type HobbyStatus = "Painted" | "In progress" | "Backlog";
+
 export type WarhammerUnit = {
   name: string;
-  category: "Character" | "Battleline" | "Infantry" | "Vehicle" | "Dedicated Transport";
-  points: number;
-  count: string;
-  assemblyStatus: string;
-  paintingStatus: string;
-  notes?: string;
-  images?: {
-    src: string;
-    alt: string;
-  }[];
+  count: number;
+  category: "Characters" | "Infantry" | "Vehicles";
+  status?: HobbyStatus;
+  source?: string;
+  note?: string;
 };
 
-export type WantedWarhammerItem = {
+export type WarhammerArmy = {
+  id: "black-templars" | "ultramarines" | "orks";
   name: string;
-  priority: "Low" | "Medium" | "High";
-  notes?: string;
-  link?: string;
+  shortName: string;
+  role: string;
+  theme: string;
+  scheme: string;
+  priority: string;
+  accent: string;
+  units: WarhammerUnit[];
+  wanted: string[];
 };
 
-export const warhammer = {
-  faction: "Black Templars",
-  overview:
-    "A crusading Black Templars collection tracked like an army manifest: characters, squads, armor, reinforcements, and the next glorious purchases.",
-  // Add owned unit photos to public/warhammer and reference them with /warhammer/file-name.jpg.
-  ownedUnits: [
-    { name: "Apothecary Biologis", category: "Character", points: 70, count: "1x", assemblyStatus: "Built", paintingStatus: "TBD" },
-    { name: "Bladeguard Ancient", category: "Character", points: 45, count: "1x", assemblyStatus: "Built", paintingStatus: "TBD" },
-    { name: "Captain", category: "Character", points: 80, count: "1x", assemblyStatus: "TBD", paintingStatus: "TBD" },
-    { name: "Castellan", category: "Character", points: 70, count: "1x", assemblyStatus: "TBD", paintingStatus: "TBD" },
-    { name: "Chaplain", category: "Character", points: 60, count: "1x", assemblyStatus: "Built", paintingStatus: "TBD" },
-    { name: "Crusade Ancient", category: "Character", points: 55, count: "1x", assemblyStatus: "TBD", paintingStatus: "TBD" },
-    {
-      name: "Emperor's Champion",
-      category: "Character",
-      points: 100,
-      count: "1x",
-      assemblyStatus: "Built",
-      paintingStatus: "Painted",
-      notes: "Warlord"
-    },
-    { name: "Execrator", category: "Character", points: 60, count: "1x", assemblyStatus: "TBD", paintingStatus: "TBD" },
-    { name: "Judiciar", category: "Character", points: 70, count: "1x", assemblyStatus: "TBD", paintingStatus: "TBD" },
-    { name: "Crusader Squad", category: "Battleline", points: 150, count: "10x", assemblyStatus: "TBD", paintingStatus: "TBD" },
-    { name: "Intercessor Squad", category: "Battleline", points: 80, count: "5x", assemblyStatus: "Built", paintingStatus: "Painted" },
-    { name: "Intercessor Squad", category: "Battleline", points: 80, count: "5x", assemblyStatus: "Built", paintingStatus: "Painted" },
-    { name: "Bladeguard Veteran Squad", category: "Infantry", points: 80, count: "3x", assemblyStatus: "TBD", paintingStatus: "TBD" },
-    { name: "Bladeguard Veteran Squad", category: "Infantry", points: 80, count: "3x", assemblyStatus: "TBD", paintingStatus: "TBD" },
-    { name: "Company Heroes", category: "Infantry", points: 105, count: "4x", assemblyStatus: "TBD", paintingStatus: "TBD" },
-    { name: "Eliminator Squad", category: "Infantry", points: 85, count: "3x", assemblyStatus: "TBD", paintingStatus: "TBD" },
-    { name: "Eradicator Squad", category: "Infantry", points: 90, count: "3x", assemblyStatus: "TBD", paintingStatus: "TBD" },
-    { name: "Hellblaster Squad", category: "Infantry", points: 110, count: "5x", assemblyStatus: "TBD", paintingStatus: "TBD" },
-    { name: "Infernus Squad", category: "Infantry", points: 90, count: "5x", assemblyStatus: "Built", paintingStatus: "TBD" },
-    { name: "Scout Squad", category: "Infantry", points: 140, count: "10x", assemblyStatus: "Built", paintingStatus: "TBD" },
-    { name: "Sternguard Veteran Squad", category: "Infantry", points: 85, count: "5x", assemblyStatus: "TBD", paintingStatus: "TBD" },
-    { name: "Sword Brethren Squad", category: "Infantry", points: 130, count: "5x", assemblyStatus: "TBD", paintingStatus: "TBD" },
-    { name: "Terminator Squad", category: "Infantry", points: 175, count: "5x", assemblyStatus: "Built", paintingStatus: "TBD" },
-    { name: "Ballistus Dreadnought", category: "Vehicle", points: 150, count: "1x", assemblyStatus: "Built", paintingStatus: "TBD" },
-    { name: "Brutalis Dreadnought", category: "Vehicle", points: 160, count: "1x", assemblyStatus: "Built", paintingStatus: "TBD" },
-    { name: "Land Raider", category: "Vehicle", points: 220, count: "1x", assemblyStatus: "TBD", paintingStatus: "TBD" },
-    { name: "Redemptor Dreadnought", category: "Vehicle", points: 205, count: "1x", assemblyStatus: "TBD", paintingStatus: "TBD" },
-    { name: "Vindicator", category: "Vehicle", points: 185, count: "1x", assemblyStatus: "Built", paintingStatus: "TBD" },
-    { name: "Impulsor", category: "Dedicated Transport", points: 85, count: "1x", assemblyStatus: "Built", paintingStatus: "TBD" },
-    { name: "Razorback", category: "Dedicated Transport", points: 95, count: "1x", assemblyStatus: "Built", paintingStatus: "TBD" }
-  ] satisfies WarhammerUnit[],
-  wantedItems: [
-    { name: "High Marshal Helbrecht", priority: "High", notes: "Centerpiece commander for the crusade." },
-    { name: "Chaplain Grimaldus and Retinue", priority: "High", notes: "Narrative-heavy Black Templars icon." },
-    { name: "Repulsor Executioner", priority: "Medium", notes: "Big armor, big guns, big shelf presence." },
-    { name: "More Crusader Squads", priority: "Medium", notes: "The correct answer is apparently always more crusaders." }
-  ] satisfies WantedWarhammerItem[]
-};
+export const armies: WarhammerArmy[] = [
+  {
+    id: "black-templars",
+    name: "Black Templars",
+    shortName: "BT",
+    role: "Primary playable force",
+    theme: "Crusading melee, vows, tabards, chains, relics, and a Land Raider assault force.",
+    scheme: "Black Templars",
+    priority: "Main army · hobby priority one",
+    accent: "#e7e2d5",
+    units: [
+      { name: "High Marshal Helbrecht", count: 1, category: "Characters" },
+      { name: "Emperor’s Champion", count: 1, category: "Characters", status: "In progress" },
+      { name: "Judiciar", count: 1, category: "Characters", source: "Dawn of War", note: "Push-fit" },
+      { name: "Chaplain", count: 1, category: "Characters", source: "Dawn of War", note: "Push-fit" },
+      { name: "Chaplain", count: 1, category: "Characters", note: "Extra" },
+      { name: "Bladeguard Ancient", count: 1, category: "Characters", source: "Dawn of War", note: "Push-fit" },
+      { name: "Primaris Crusader Squad", count: 10, category: "Infantry", status: "Painted", note: "1 Sword Brother · 5 Initiates · 4 Neophytes" },
+      { name: "Intercessors", count: 10, category: "Infantry", status: "Painted" },
+      { name: "Primaris Sword Brethren", count: 5, category: "Infantry" },
+      { name: "Bladeguard Veterans", count: 3, category: "Infantry", source: "Combat Patrol" },
+      { name: "Bladeguard Veterans", count: 3, category: "Infantry", source: "Dawn of War", note: "Push-fit" },
+      { name: "Vanguard Veterans with Jump Packs", count: 5, category: "Infantry", source: "Armageddon" },
+      { name: "Terminators", count: 5, category: "Infantry", source: "3D printed" },
+      { name: "Infernus Marines", count: 5, category: "Infantry", source: "3D printed" },
+      { name: "Scouts", count: 10, category: "Infantry", source: "3D printed" },
+      { name: "Land Raider", count: 1, category: "Vehicles" },
+      { name: "Vindicator", count: 1, category: "Vehicles" },
+      { name: "Impulsor", count: 1, category: "Vehicles" },
+      { name: "Razorback", count: 1, category: "Vehicles" },
+      { name: "Brutalis Dreadnought", count: 1, category: "Vehicles" },
+      { name: "Repulsor Executioner", count: 1, category: "Vehicles", source: "3D printed", note: "BT / flex assignment" }
+    ],
+    wanted: ["Chaplain Grimaldus", "Primaris Crusader Squad", "5 Sword Brethren", "Infiltrators / Incursors", "Techmarine"]
+  },
+  {
+    id: "ultramarines",
+    name: "Ultramarines",
+    shortName: "UM",
+    role: "Combined-arms shooting army",
+    theme: "Disciplined command, veterans, plasma, Gravis armor, dreadnoughts, and ranged pressure.",
+    scheme: "Ultramarines",
+    priority: "Second army · distinct ranged identity",
+    accent: "#4e8cff",
+    units: [
+      { name: "Captain", count: 1, category: "Characters", source: "Iron Halo Strike Force", note: "Company Heroes" },
+      { name: "Captain with Relic Shield", count: 1, category: "Characters", source: "Armageddon" },
+      { name: "Primaris Lieutenant", count: 1, category: "Characters", source: "Iron Halo Strike Force" },
+      { name: "Librarian", count: 1, category: "Characters", source: "Armageddon" },
+      { name: "Ancient", count: 1, category: "Characters", source: "Armageddon" },
+      { name: "Intercessors", count: 10, category: "Infantry", source: "Armageddon" },
+      { name: "Company Heroes bodyguard", count: 4, category: "Infantry", source: "Iron Halo Strike Force" },
+      { name: "Sternguard Veterans", count: 5, category: "Infantry", source: "Iron Halo Strike Force" },
+      { name: "Hellblasters", count: 5, category: "Infantry", source: "Iron Halo Strike Force" },
+      { name: "Eradicators", count: 3, category: "Infantry", source: "Armageddon" },
+      { name: "Eradicators", count: 3, category: "Infantry", source: "Dawn of War", note: "Flexible · likely Ultramarines" },
+      { name: "Aggressors", count: 6, category: "Infantry", source: "3D printed" },
+      { name: "Vanguard Veterans with Jump Packs", count: 5, category: "Infantry", source: "3D printed" },
+      { name: "Redemptor Dreadnought", count: 1, category: "Vehicles", source: "Iron Halo Strike Force" },
+      { name: "Ballistus Dreadnought", count: 1, category: "Vehicles", source: "Iron Halo Strike Force" },
+      { name: "Land Speeder", count: 1, category: "Vehicles", source: "Armageddon" }
+    ],
+    wanted: ["Marneus Calgar + Victrix Guard", "5 Infiltrators", "3 Inceptors", "Gladiator Lancer", "Ultramarines Upgrade Kit"]
+  },
+  {
+    id: "orks",
+    name: "Orks",
+    shortName: "ORK",
+    role: "Side project and palette cleanser",
+    theme: "Waaagh energy, junk vehicles, green skin, rust, checks, glyphs, and glorious chaos.",
+    scheme: "TBD · Goff or Armageddon",
+    priority: "Contrast army · keep Armageddon side together",
+    accent: "#99c93d",
+    units: [
+      { name: "Warboss", count: 1, category: "Characters", source: "Armageddon" },
+      { name: "Bigboss", count: 1, category: "Characters", source: "Armageddon" },
+      { name: "Bannernob", count: 1, category: "Characters", source: "Armageddon" },
+      { name: "Painboy with Grot Orderly", count: 2, category: "Characters", source: "Armageddon", note: "Painboy + companion" },
+      { name: "Weirdboy", count: 1, category: "Characters", source: "Armageddon" },
+      { name: "Big Mek Dakkarig", count: 1, category: "Characters", source: "Armageddon" },
+      { name: "Boyz", count: 20, category: "Infantry", source: "Armageddon" },
+      { name: "Gretchin", count: 10, category: "Infantry", source: "Armageddon" },
+      { name: "Wartrakk", count: 1, category: "Vehicles", source: "Armageddon" }
+    ],
+    wanted: ["Trukk", "Nobz", "Meganobz", "Ork Combat Patrol", "More Boyz / Beast Snagga Boyz"]
+  }
+];
+
+export const removedModels = [
+  { name: "Apothecary Biologis", reason: "Model broke" },
+  { name: "3 Eliminators", reason: "Bad print · one model missing" }
+];
+
+export const hobbyRotation = [
+  "Finish the Black Templars core",
+  "Paint a batch of Orks as a break",
+  "Paint Ultramarines when blue Marines sound fun",
+  "Return to Black Templars vehicles and elites"
+];

@@ -1,106 +1,131 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { warhammer, type WarhammerUnit } from "@/data/warhammer";
+import { armies, hobbyRotation, removedModels, type HobbyStatus } from "@/data/warhammer";
 
-const categories: { label: string; value: WarhammerUnit["category"] }[] = [
-  { label: "Characters", value: "Character" },
-  { label: "Battleline", value: "Battleline" },
-  { label: "Infantry", value: "Infantry" },
-  { label: "Vehicles", value: "Vehicle" },
-  { label: "Dedicated Transport", value: "Dedicated Transport" }
-];
-const totalPoints = warhammer.ownedUnits.reduce((sum, unit) => sum + unit.points, 0);
-const unitCount = warhammer.ownedUnits.length;
-const getStatusTags = (unit: WarhammerUnit) => {
-  if (unit.assemblyStatus === "Built" && unit.paintingStatus !== "Painted") return ["Built", "Need Paint"];
-  if (unit.assemblyStatus === "Built" && unit.paintingStatus === "Painted") return ["Built", "Painted"];
-  return ["Owned"];
-};
+const modelCount = (army: (typeof armies)[number]) => army.units.reduce((sum, unit) => sum + unit.count, 0);
+const statusCount = (army: (typeof armies)[number], status: HobbyStatus) =>
+  army.units.filter((unit) => (unit.status ?? "Backlog") === status).reduce((sum, unit) => sum + unit.count, 0);
+const totalModels = armies.reduce((sum, army) => sum + modelCount(army), 0);
+const totalPainted = armies.reduce((sum, army) => sum + statusCount(army, "Painted"), 0);
+const totalStarted = armies.reduce((sum, army) => sum + statusCount(army, "In progress"), 0);
+const paintedPercent = Math.round((totalPainted / totalModels) * 100);
+const categories = ["Characters", "Infantry", "Vehicles"] as const;
 ---
 
-<BaseLayout title="Warhammer" description="Black Templars army notes, units, painting progress, and wanted models.">
-  <main class="page game-content-page">
+<BaseLayout title="Warhammer Collection" description="Three-army Warhammer 40K collection and hobby progress dashboard.">
+  <main class="page game-content-page war-dashboard">
     <div class="container">
-      <header class="page-heading game-panel hero-panel">
-        <p class="eyebrow">Warhammer</p>
-        <h1>{warhammer.faction}</h1>
+      <header class="war-command">
+        <div>
+          <p class="eyebrow">Collection command // 03 active forces</p>
+          <h1>The War Room</h1>
+          <p>One collection. Three very different ways to make poor tactical decisions with confidence.</p>
+        </div>
+        <div class="command-seal" aria-hidden="true"><span>40</span><small>K</small></div>
       </header>
-      <p class="page-subtitle war-subtitle">{warhammer.overview}</p>
 
-      <section class="roster-summary" aria-label="Collection summary">
-        <article>
-          <span>Total Points</span>
-          <strong>{totalPoints.toLocaleString()}</strong>
-        </article>
-        <article>
-          <span>Owned Entries</span>
-          <strong>{unitCount}</strong>
-        </article>
-        <article>
-          <span>Faction</span>
-          <strong>{warhammer.faction}</strong>
-        </article>
+      <section class="collection-stats" aria-label="Collection progress">
+        <article><span>Collection</span><strong>{totalModels}</strong><small>models tracked</small></article>
+        <article><span>Painted</span><strong>{totalPainted}</strong><small>{paintedPercent}% complete</small></article>
+        <article><span>On the desk</span><strong>{totalStarted}</strong><small>Emperor’s Champion</small></article>
+        <article class="focus-stat"><span>Current directive</span><strong>Templars first</strong><small>Build a clean 1,000-point core before buying deep</small></article>
       </section>
 
-      <section class="page-heading section-heading">
-        <p class="eyebrow">Owned Units</p>
-        <h2>Army manifest.</h2>
-      </section>
+      <div class="overall-progress" aria-label={`${paintedPercent}% of collection painted`}>
+        <div><span>Overall painting progress</span><b>{paintedPercent}%</b></div>
+        <div class="progress-track"><i style={`width: ${paintedPercent}%`}></i></div>
+      </div>
 
-      <section class="roster-groups">
-        {categories.map((category) => {
-          const units = warhammer.ownedUnits.filter((unit) => unit.category === category.value);
-          const categoryPoints = units.reduce((sum, unit) => sum + unit.points, 0);
-          const categoryMeta = `${units.length} entries / ${categoryPoints} pts`;
+      <nav class="army-switcher" aria-label="Filter collection by army">
+        <button type="button" class="is-active" data-army-filter="all">All forces <span>{totalModels}</span></button>
+        {armies.map((army) => <button type="button" data-army-filter={army.id}>{army.name} <span>{modelCount(army)}</span></button>)}
+      </nav>
 
+      <section class="army-overview" aria-label="Army overview">
+        {armies.map((army, index) => {
+          const total = modelCount(army);
+          const painted = statusCount(army, "Painted");
+          const started = statusCount(army, "In progress");
+          const percent = Math.round((painted / total) * 100);
           return (
-            <section class="roster-group">
-              <header class="roster-group-header">
-                <p class="eyebrow">{category.label}</p>
-                <span>{categoryMeta}</span>
+            <article class={`army-card army-${army.id}`} data-army={army.id} style={`--army-accent: ${army.accent}`}>
+              <header>
+                <span class="army-index">0{index + 1}</span>
+                <div><p>{army.priority}</p><h2>{army.name}</h2></div>
+                <span class="army-monogram">{army.shortName}</span>
               </header>
-              <div class="roster-list">
-                {units.map((unit) => (
-                  <article class="roster-row">
-                    {unit.images?.[0] && <img src={unit.images[0].src} alt={unit.images[0].alt} loading="lazy" />}
-                    <div class="roster-main">
-                      <p class="card-meta">{unit.count} / {unit.points} pts</p>
-                      <h3>{unit.name}</h3>
-                      <div class="status-row">
-                        {getStatusTags(unit).map((status) => <span>{status}</span>)}
-                      </div>
-                      {unit.notes && <p>{unit.notes}</p>}
-                    </div>
-                    {unit.wargear && (
-                      <ul class="wargear-list" aria-label={`${unit.name} wargear`}>
-                        {unit.wargear.map((item) => <li>{item}</li>)}
-                      </ul>
-                    )}
-                  </article>
-                ))}
+              <p class="army-role">{army.role}</p>
+              <p class="army-theme">{army.theme}</p>
+              <div class="army-meter">
+                <div><span>{painted} painted · {started} active</span><b>{percent}%</b></div>
+                <div class="progress-track"><i style={`width: ${percent}%`}></i></div>
               </div>
-            </section>
+              <dl>
+                <div><dt>Models</dt><dd>{total}</dd></div>
+                <div><dt>Scheme</dt><dd>{army.scheme}</dd></div>
+              </dl>
+            </article>
           );
         })}
       </section>
 
-      <section class="subsection">
-        <div class="page-heading">
-          <p class="eyebrow">Wanted</p>
-          <h2>Future reinforcements.</h2>
-        </div>
-        <div class="wanted-list">
-          {warhammer.wantedItems.map((item) => (
-            <article class="wanted-row">
-              <div>
-                <h3>{item.name}</h3>
-                {item.notes && <p>{item.notes}</p>}
+      <section class="dashboard-section manifest-section">
+        <header class="dashboard-heading"><div><p class="eyebrow">The manifest</p><h2>Everything on the shelf.</h2></div><p>Paint status and provenance at a glance.</p></header>
+        <div class="army-manifests">
+          {armies.map((army) => (
+            <article class="army-manifest" data-army={army.id} style={`--army-accent: ${army.accent}`}>
+              <header><div><span>{army.shortName}</span><h3>{army.name}</h3></div><b>{modelCount(army)} models</b></header>
+              <div class="manifest-columns">
+                {categories.map((category) => {
+                  const units = army.units.filter((unit) => unit.category === category);
+                  const count = units.reduce((sum, unit) => sum + unit.count, 0);
+                  return (
+                    <section class="manifest-category">
+                      <h4>{category}<span>{count}</span></h4>
+                      <ul>
+                        {units.map((unit) => {
+                          const status = unit.status ?? "Backlog";
+                          return (
+                            <li>
+                              <span class={`status-dot status-${status.toLowerCase().replace(" ", "-")}`} title={status}></span>
+                              <div><strong>{unit.name}</strong>{(unit.source || unit.note) && <small>{[unit.source, unit.note].filter(Boolean).join(" · ")}</small>}</div>
+                              <b>×{unit.count}</b>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </section>
+                  );
+                })}
               </div>
-              {item.link && <a href={item.link}>Reference</a>}
             </article>
           ))}
         </div>
       </section>
+
+      <section class="dashboard-section planning-grid">
+        <article class="priority-panel">
+          <p class="eyebrow">Hobby rotation</p><h2>Keep the momentum moving.</h2>
+          <ol>{hobbyRotation.map((step, index) => <li class={index === 0 ? "is-current" : ""}><span>0{index + 1}</span><p>{step}{index === 0 && <small>Current objective</small>}</p></li>)}</ol>
+        </article>
+        <article class="wishlist-panel">
+          <p class="eyebrow">Reinforcement queue</p><h2>Future acquisitions.</h2>
+          {armies.map((army) => <section data-army={army.id}><h3 style={`--army-accent: ${army.accent}`}>{army.name}</h3><ul>{army.wanted.map((item) => <li>{item}</li>)}</ul></section>)}
+          <p class="buy-rule">Hold the line: avoid major buys until the Black Templars have a painted 1,000-point force.</p>
+        </article>
+      </section>
+
+      <details class="removed-panel"><summary>Removed / not counted <span>{removedModels.length}</span></summary><ul>{removedModels.map((model) => <li><strong>{model.name}</strong><span>{model.reason}</span></li>)}</ul></details>
     </div>
   </main>
+
+  <script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>("[data-army-filter]");
+    const filterable = document.querySelectorAll<HTMLElement>("[data-army]");
+    buttons.forEach((button) => button.addEventListener("click", () => {
+      const filter = button.dataset.armyFilter;
+      buttons.forEach((item) => item.classList.toggle("is-active", item === button));
+      filterable.forEach((item) => item.hidden = filter !== "all" && item.dataset.army !== filter);
+    }));
+  </script>
 </BaseLayout>
