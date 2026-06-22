@@ -7,7 +7,7 @@ const statusCount = (army: (typeof armies)[number], status: HobbyStatus) =>
   army.units.filter((unit) => (unit.status ?? "Unassembled") === status).reduce((sum, unit) => sum + unit.count, 0);
 const totalModels = armies.reduce((sum, army) => sum + modelCount(army), 0);
 const totalPainted = armies.reduce((sum, army) => sum + statusCount(army, "Painted"), 0);
-const totalStarted = armies.reduce((sum, army) => sum + army.units.filter((unit) => unit.onDesk).reduce((count, unit) => count + unit.count, 0), 0);
+const totalBuilt = armies.reduce((sum, army) => sum + statusCount(army, "Built"), 0);
 const paintedPercent = Math.round((totalPainted / totalModels) * 100);
 const categories = ["Characters", "Infantry", "Vehicles"] as const;
 ---
@@ -26,7 +26,7 @@ const categories = ["Characters", "Infantry", "Vehicles"] as const;
       <section class="collection-stats" aria-label="Collection progress">
         <article><span>Collection</span><strong>{totalModels}</strong><small>models tracked</small></article>
         <article><span>Painted</span><strong>{totalPainted}</strong><small>{paintedPercent}% complete</small></article>
-        <article><span>On the desk</span><strong>{totalStarted}</strong><small>Emperor’s Champion</small></article>
+        <article><span>On the desk</span><strong>{totalBuilt}</strong><small>Built · awaiting paint</small></article>
         <article class="focus-stat"><span>Current directive</span><strong>Black Templars</strong><small>Clean 1,500 points built</small></article>
       </section>
 
@@ -50,7 +50,7 @@ const categories = ["Characters", "Infantry", "Vehicles"] as const;
             <article class={`army-card army-${army.id}`} data-army={army.id} style={`--army-accent: ${army.accent}`}>
               <header>
                 <span class="army-index">0{index + 1}</span>
-                <div><p>{army.priority}</p><h2>{army.name}</h2></div>
+                <h2>{army.name}</h2>
                 <span class="army-monogram">{army.shortName}</span>
               </header>
               <p class="army-role">{army.role}</p>

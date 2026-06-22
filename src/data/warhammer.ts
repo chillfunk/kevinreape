@@ -5,7 +5,6 @@ export type WarhammerUnit = {
   count: number;
   category: "Characters" | "Infantry" | "Vehicles";
   status?: HobbyStatus;
-  onDesk?: boolean;
   source?: string;
   note?: string;
 };
@@ -17,7 +16,6 @@ export type WarhammerArmy = {
   role: string;
   theme: string;
   scheme: string;
-  priority: string;
   accent: string;
   units: WarhammerUnit[];
   wanted: string[];
@@ -31,11 +29,10 @@ export const armies: WarhammerArmy[] = [
     role: "Primary playable force",
     theme: "Crusading melee, vows, tabards, chains, relics, and a Land Raider assault force.",
     scheme: "Black Templars",
-    priority: "Main army · hobby priority one",
     accent: "#e7e2d5",
     units: [
       { name: "High Marshal Helbrecht", count: 1, category: "Characters" },
-      { name: "Emperor’s Champion", count: 1, category: "Characters", status: "Built", onDesk: true },
+      { name: "Emperor’s Champion", count: 1, category: "Characters", status: "Built" },
       { name: "Judiciar", count: 1, category: "Characters", source: "Dawn of War", status: "Built" },
       { name: "Chaplain", count: 1, category: "Characters", source: "Dawn of War", status: "Built" },
       { name: "Chaplain", count: 1, category: "Characters", source: "3D printed", status: "Built" },
@@ -65,7 +62,6 @@ export const armies: WarhammerArmy[] = [
     role: "Combined-arms shooting army",
     theme: "Disciplined command, veterans, plasma, Gravis armor, dreadnoughts, and ranged pressure.",
     scheme: "Ultramarines",
-    priority: "Second army · distinct ranged identity",
     accent: "#4e8cff",
     units: [
       { name: "Captain", count: 1, category: "Characters", source: "Iron Halo Strike Force", note: "Company Heroes" },
@@ -94,7 +90,6 @@ export const armies: WarhammerArmy[] = [
     role: "Side project and palette cleanser",
     theme: "Waaagh energy, junk vehicles, green skin, rust, checks, glyphs, and glorious chaos.",
     scheme: "TBD · Goff or Armageddon",
-    priority: "Contrast army · keep Armageddon side together",
     accent: "#99c93d",
     units: [
       { name: "Warboss", count: 1, category: "Characters", source: "Armageddon" },

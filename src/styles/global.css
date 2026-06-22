@@ -1048,7 +1048,6 @@ p {
 .army-card > * { position: relative; z-index: 1; }
 .army-card header { display: grid; grid-template-columns: auto 1fr auto; align-items: start; gap: 12px; }
 .army-index { color: var(--army-accent); font-family: Impact, sans-serif; font-size: 1.4rem; font-style: italic; }
-.army-card header p { margin: 1px 0 3px; color: var(--war-dim); font-size: 0.61rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
 .army-card h2 { margin: 0; font-family: Impact, sans-serif; font-size: 1.8rem; font-style: italic; line-height: 1; text-transform: uppercase; }
 .army-monogram { display: grid; width: 36px; height: 36px; place-items: center; border: 1px solid color-mix(in srgb, var(--army-accent) 50%, transparent); color: var(--army-accent); font-size: 0.65rem; font-weight: 900; }
 .army-role { margin: 23px 0 5px; color: #fff; font-weight: 800; }
