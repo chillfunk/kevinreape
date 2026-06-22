@@ -7,7 +7,7 @@ const statusCount = (army: (typeof armies)[number], status: HobbyStatus) =>
   army.units.filter((unit) => (unit.status ?? "Unassembled") === status).reduce((sum, unit) => sum + unit.count, 0);
 const totalModels = armies.reduce((sum, army) => sum + modelCount(army), 0);
 const totalPainted = armies.reduce((sum, army) => sum + statusCount(army, "Painted"), 0);
-const totalBuilt = armies.reduce((sum, army) => sum + statusCount(army, "Built"), 0);
+const totalBuilt = armies.reduce((sum, army) => sum + statusCount(army, "Built") + statusCount(army, "Currently painting"), 0);
 const paintedPercent = Math.round((totalPainted / totalModels) * 100);
 const categories = ["Characters", "Infantry", "Vehicles"] as const;
 ---
@@ -17,16 +17,16 @@ const categories = ["Characters", "Infantry", "Vehicles"] as const;
     <div class="container">
       <header class="war-command">
         <div>
-          <p class="eyebrow">Collection command // 03 active forces</p>
+          <p class="eyebrow">Three armies // one increasingly crowded shelf</p>
           <h1>The War Room</h1>
         </div>
-        <div class="command-seal" aria-hidden="true"><span>40</span><small>K</small></div>
+        <div class="command-seal" aria-hidden="true"><span>WH</span><small>40K</small></div>
       </header>
 
       <section class="collection-stats" aria-label="Collection progress">
         <article><span>Collection</span><strong>{totalModels}</strong><small>models tracked</small></article>
         <article><span>Painted</span><strong>{totalPainted}</strong><small>{paintedPercent}% complete</small></article>
-        <article><span>On the desk</span><strong>{totalBuilt}</strong><small>Built · awaiting paint</small></article>
+        <article><span>On the desk</span><strong>{totalBuilt}</strong><small>Built or being painted</small></article>
         <article class="focus-stat"><span>Current directive</span><strong>Black Templars</strong><small>Clean 1,500 points built</small></article>
       </section>
 
@@ -44,6 +44,7 @@ const categories = ["Characters", "Infantry", "Vehicles"] as const;
         {armies.map((army, index) => {
           const total = modelCount(army);
           const painted = statusCount(army, "Painted");
+          const painting = statusCount(army, "Currently painting");
           const built = statusCount(army, "Built");
           const percent = Math.round((painted / total) * 100);
           return (
@@ -56,7 +57,7 @@ const categories = ["Characters", "Infantry", "Vehicles"] as const;
               <p class="army-role">{army.role}</p>
               <p class="army-theme">{army.theme}</p>
               <div class="army-meter">
-                <div><span>{painted} painted · {built} built</span><b>{percent}%</b></div>
+                <div><span>{painted} painted · {painting} painting · {built} built</span><b>{percent}%</b></div>
                 <div class="progress-track"><i style={`width: ${percent}%`}></i></div>
               </div>
               <dl>
@@ -69,7 +70,7 @@ const categories = ["Characters", "Infantry", "Vehicles"] as const;
       </section>
 
       <section class="dashboard-section manifest-section">
-        <header class="dashboard-heading"><div><p class="eyebrow">The manifest</p><h2>Everything on the shelf.</h2></div><div class="status-key" aria-label="Model status key"><span><i class="status-dot status-painted"></i> Painted</span><span><i class="status-dot status-built"></i> Built</span><span><i class="status-dot status-unassembled"></i> Unassembled</span></div></header>
+        <header class="dashboard-heading"><div><p class="eyebrow">Army case</p><h2>Everything on the shelf.</h2></div><div class="status-key" aria-label="Model status key"><span><i class="status-dot status-painted"></i> Painted</span><span><i class="status-dot status-currently-painting"></i> Currently painting</span><span><i class="status-dot status-built"></i> Built</span><span><i class="status-dot status-unassembled"></i> Unassembled</span></div></header>
         <div class="army-manifests">
           {armies.map((army) => (
             <article class="army-manifest" data-army={army.id} style={`--army-accent: ${army.accent}`}>

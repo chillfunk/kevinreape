@@ -18,7 +18,7 @@ const holdItems = mediaItems.filter((item) => item.category === "hold");
       <section class="media-columns">
         <div>
           <div class="page-heading section-heading">
-            <h2>On screen.</h2>
+            <h2>Watching.</h2>
           </div>
           <div class="media-list">
             {screenItems.map((item) => <MediaCard item={item} />)}
@@ -26,7 +26,7 @@ const holdItems = mediaItems.filter((item) => item.category === "hold");
         </div>
         <div>
           <div class="page-heading section-heading">
-            <h2>On shelf.</h2>
+            <h2>Reading.</h2>
           </div>
           <div class="media-list">
             {shelfItems.map((item) => <MediaCard item={item} />)}
@@ -34,7 +34,7 @@ const holdItems = mediaItems.filter((item) => item.category === "hold");
         </div>
         <div>
           <div class="page-heading section-heading">
-            <h2>On hold.</h2>
+            <h2>Waiting.</h2>
           </div>
           <div class="media-list">
             {holdItems.map((item) => <MediaCard item={item} />)}

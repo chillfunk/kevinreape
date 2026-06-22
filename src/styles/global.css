@@ -134,6 +134,12 @@ img {
 }
 
 .game-logo strong {
+  display: inline-block;
+  width: max-content;
+  padding-right: 0.12em;
+  -webkit-backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  transform: translateZ(0);
   color: #ffffff;
   -webkit-text-fill-color: #ffffff;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", var(--font-sans);
@@ -150,7 +156,8 @@ img {
 .game-logo:focus-visible strong {
   color: var(--danger-red);
   -webkit-text-fill-color: var(--danger-red);
-  -webkit-text-stroke: 0.25px var(--danger-red);
+  -webkit-text-stroke: 1.25px var(--danger-red);
+  paint-order: stroke fill;
 }
 
 .game-logo:hover strong,
@@ -1017,7 +1024,7 @@ p {
   transform: rotate(3deg);
 }
 .command-seal span { font-family: Impact, sans-serif; font-size: 3.2rem; line-height: 0.8; }
-.command-seal small { font-weight: 900; letter-spacing: 0.5em; transform: translateX(0.25em); }
+.command-seal small { margin-top: 7px; font-size: 1.7rem; font-weight: 900; letter-spacing: 0; line-height: 0.8; }
 
 .collection-stats {
   display: grid;
@@ -1085,6 +1092,7 @@ p {
 .manifest-category li > b { color: var(--war-dim); font-family: ui-monospace, monospace; font-size: .68rem; }
 .status-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.22); }
 .status-painted { background: #56d69b; box-shadow: 0 0 7px rgba(86,214,155,.7); }
+.status-currently-painting { background: #4ec5ff; box-shadow: 0 0 7px rgba(78,197,255,.75); }
 .status-built { background: #e6a83c; box-shadow: 0 0 7px rgba(230,168,60,.7); }
 .status-unassembled { background: rgba(255,255,255,.28); }
 

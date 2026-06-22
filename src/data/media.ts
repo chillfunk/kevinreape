@@ -30,9 +30,9 @@ export const mediaItems: MediaItem[] = [
   {
     title: "Widow's Bay",
     type: "watching",
-    category: "screen",
-    status: "current",
-    season: "S.1",
+    category: "hold",
+    status: "paused",
+    season: "S.2",
     link: "https://tv.apple.com/us/show/widows-bay/umc.cmc.1zzly0vah46bnvnwf0qkrjhh2"
   },
   {

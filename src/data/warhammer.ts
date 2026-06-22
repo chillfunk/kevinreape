@@ -1,4 +1,4 @@
-export type HobbyStatus = "Painted" | "Built" | "Unassembled";
+export type HobbyStatus = "Painted" | "Currently painting" | "Built" | "Unassembled";
 
 export type WarhammerUnit = {
   name: string;
@@ -26,8 +26,8 @@ export const armies: WarhammerArmy[] = [
     id: "black-templars",
     name: "Black Templars",
     shortName: "BT",
-    role: "Primary playable force",
-    theme: "Crusading melee, vows, tabards, chains, relics, and a Land Raider assault force.",
+    role: "Main army",
+    theme: "Black Templars built around close combat, tabards, chained weapons, and a Land Raider full of bad intentions.",
     scheme: "Black Templars",
     accent: "#e7e2d5",
     units: [
@@ -37,7 +37,7 @@ export const armies: WarhammerArmy[] = [
       { name: "Chaplain", count: 1, category: "Characters", source: "Dawn of War", status: "Built" },
       { name: "Chaplain", count: 1, category: "Characters", source: "3D printed", status: "Built" },
       { name: "Bladeguard Ancient", count: 1, category: "Characters", source: "Dawn of War", status: "Built" },
-      { name: "Primaris Crusader Squad", count: 10, category: "Infantry", status: "Painted", note: "1 Sword Brother · 5 Initiates · 4 Neophytes" },
+      { name: "Primaris Crusader Squad", count: 10, category: "Infantry", status: "Currently painting", note: "1 Sword Brother · 5 Initiates · 4 Neophytes" },
       { name: "Intercessors", count: 10, category: "Infantry", status: "Painted" },
       { name: "Primaris Sword Brethren", count: 5, category: "Infantry" },
       { name: "Bladeguard Veterans", count: 3, category: "Infantry", source: "Combat Patrol" },
@@ -59,8 +59,8 @@ export const armies: WarhammerArmy[] = [
     id: "ultramarines",
     name: "Ultramarines",
     shortName: "UM",
-    role: "Combined-arms shooting army",
-    theme: "Disciplined command, veterans, plasma, Gravis armor, dreadnoughts, and ranged pressure.",
+    role: "Second Space Marine army",
+    theme: "The blue side of the collection: ranged units, Gravis armor, veterans, plasma, and plenty of dreadnoughts.",
     scheme: "Ultramarines",
     accent: "#4e8cff",
     units: [
@@ -87,8 +87,8 @@ export const armies: WarhammerArmy[] = [
     id: "orks",
     name: "Orks",
     shortName: "ORK",
-    role: "Side project and palette cleanser",
-    theme: "Waaagh energy, junk vehicles, green skin, rust, checks, glyphs, and glorious chaos.",
+    role: "Armageddon Orks",
+    theme: "The complete Ork side from Armageddon. Rust, checks, junk, green skin, and a good break from painting Marines.",
     scheme: "TBD · Goff or Armageddon",
     accent: "#99c93d",
     units: [
