@@ -1,3 +1,4 @@
+
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { armies, type HobbyStatus } from "@/data/warhammer";
@@ -27,7 +28,7 @@ const categories = ["Characters", "Infantry", "Vehicles"] as const;
         <article><span>Collection</span><strong>{totalModels}</strong><small>models tracked</small></article>
         <article><span>Painted</span><strong>{totalPainted}</strong><small>{paintedPercent}% complete</small></article>
         <article><span>On the desk</span><strong>{totalBuilt}</strong><small>Built or being painted</small></article>
-        <article class="focus-stat"><span>Current directive</span><strong>Black Templars</strong><small>Clean 1,500 points built</small></article>
+        <article class="focus-stat"><span>Current directive</span><strong>Black Templars</strong><small>112-model crusade muster</small></article>
       </section>
 
       <div class="overall-progress" aria-label={`${paintedPercent}% of collection painted`}>
