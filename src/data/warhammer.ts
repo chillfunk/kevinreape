@@ -1,3 +1,4 @@
+
 export type HobbyStatus = "Painted" | "Currently painting" | "Built" | "Unassembled";
 
 export type WarhammerUnit = {
@@ -10,7 +11,7 @@ export type WarhammerUnit = {
 };
 
 export type WarhammerArmy = {
-  id: "black-templars" | "ultramarines" | "orks";
+  id: "black-templars" | "imperial-fists" | "orks";
   name: string;
   shortName: string;
   role: string;
@@ -33,16 +34,27 @@ export const armies: WarhammerArmy[] = [
     units: [
       { name: "High Marshal Helbrecht", count: 1, category: "Characters" },
       { name: "Emperor’s Champion", count: 1, category: "Characters", status: "Built" },
-      { name: "Judiciar", count: 1, category: "Characters", source: "Dawn of War", status: "Built" },
       { name: "Chaplain", count: 1, category: "Characters", source: "Dawn of War", status: "Built" },
       { name: "Chaplain", count: 1, category: "Characters", source: "3D printed", status: "Built" },
+      { name: "Chaplain with Jump Pack", count: 1, category: "Characters", source: "Armageddon" },
+      { name: "Captain with Relic Shield", count: 1, category: "Characters", source: "Armageddon" },
+      { name: "Primaris Lieutenant", count: 1, category: "Characters", source: "Iron Halo Strike Force" },
+      { name: "Ancient", count: 1, category: "Characters", source: "Armageddon" },
+      { name: "Judiciar", count: 1, category: "Characters", source: "Dawn of War", status: "Built" },
       { name: "Bladeguard Ancient", count: 1, category: "Characters", source: "Dawn of War", status: "Built" },
-      { name: "Primaris Crusader Squad", count: 10, category: "Infantry", status: "Currently painting", note: "1 Sword Brother · 5 Initiates · 4 Neophytes" },
-      { name: "Intercessors", count: 10, category: "Infantry", status: "Painted" },
-      { name: "Primaris Sword Brethren", count: 5, category: "Infantry" },
+      { name: "Primaris Crusader Squad", count: 10, category: "Infantry", source: "Black Templars Combat Patrol", status: "Painted", note: "1 Sword Brother · 5 Initiates · 4 Neophytes" },
+      { name: "Intercessors", count: 10, category: "Infantry", source: "Primaris Intercessors box", status: "Painted" },
+      { name: "Intercessors", count: 10, category: "Infantry", source: "Armageddon" },
+      { name: "Primaris Sword Brethren", count: 5, category: "Infantry", source: "Black Templars Combat Patrol" },
       { name: "Bladeguard Veterans", count: 3, category: "Infantry", source: "Combat Patrol" },
       { name: "Bladeguard Veterans", count: 3, category: "Infantry", source: "Dawn of War", status: "Built" },
+      { name: "Sternguard Veterans", count: 5, category: "Infantry", source: "Iron Halo Strike Force" },
+      { name: "Hellblasters", count: 5, category: "Infantry", source: "Iron Halo Strike Force" },
+      { name: "Eradicators with Heavy Bolters", count: 3, category: "Infantry", source: "Armageddon" },
+      { name: "Eradicators", count: 3, category: "Infantry", source: "Dawn of War", status: "Built", note: "Melta configuration" },
+      { name: "Aggressors", count: 6, category: "Infantry", source: "3D printed", status: "Built" },
       { name: "Vanguard Veterans with Jump Packs", count: 5, category: "Infantry", source: "Armageddon" },
+      { name: "Vanguard Veterans with Jump Packs", count: 5, category: "Infantry", source: "3D printed", status: "Built" },
       { name: "Terminators", count: 5, category: "Infantry", source: "3D printed", status: "Built" },
       { name: "Infernus Marines", count: 5, category: "Infantry", source: "3D printed", status: "Built" },
       { name: "Scouts", count: 10, category: "Infantry", source: "3D printed", status: "Built" },
@@ -50,38 +62,28 @@ export const armies: WarhammerArmy[] = [
       { name: "Vindicator", count: 1, category: "Vehicles", source: "3D printed", status: "Built" },
       { name: "Impulsor", count: 1, category: "Vehicles", source: "3D printed", status: "Built" },
       { name: "Razorback", count: 1, category: "Vehicles", source: "3D printed", status: "Built" },
-      { name: "Brutalis Dreadnought", count: 1, category: "Vehicles", status: "Built" },
-      { name: "Repulsor Executioner", count: 1, category: "Vehicles", source: "3D printed", note: "BT / flex assignment", status: "Built" }
-    ],
-    wanted: ["Chaplain Grimaldus", "Primaris Crusader Squad", "5 Sword Brethren", "Infiltrators / Incursors", "Techmarine"]
-  },
-  {
-    id: "ultramarines",
-    name: "Ultramarines",
-    shortName: "UM",
-    role: "Second Space Marine army",
-    theme: "The blue side of the collection: ranged units, Gravis armor, veterans, plasma, and plenty of dreadnoughts.",
-    scheme: "Ultramarines",
-    accent: "#4e8cff",
-    units: [
-      { name: "Captain", count: 1, category: "Characters", source: "Iron Halo Strike Force", note: "Company Heroes" },
-      { name: "Captain with Relic Shield", count: 1, category: "Characters", source: "Armageddon" },
-      { name: "Primaris Lieutenant", count: 1, category: "Characters", source: "Iron Halo Strike Force" },
-      { name: "Librarian", count: 1, category: "Characters", source: "Armageddon" },
-      { name: "Ancient", count: 1, category: "Characters", source: "Armageddon" },
-      { name: "Intercessors", count: 10, category: "Infantry", source: "Armageddon" },
-      { name: "Company Heroes bodyguard", count: 4, category: "Infantry", source: "Iron Halo Strike Force" },
-      { name: "Sternguard Veterans", count: 5, category: "Infantry", source: "Iron Halo Strike Force" },
-      { name: "Hellblasters", count: 5, category: "Infantry", source: "Iron Halo Strike Force" },
-      { name: "Eradicators", count: 3, category: "Infantry", source: "Armageddon" },
-      { name: "Eradicators", count: 3, category: "Infantry", source: "Dawn of War", note: "Flexible · likely Ultramarines", status: "Built" },
-      { name: "Aggressors", count: 6, category: "Infantry", source: "3D printed", status: "Built" },
-      { name: "Vanguard Veterans with Jump Packs", count: 5, category: "Infantry", source: "3D printed", status: "Built" },
+      { name: "Brutalis Dreadnought", count: 1, category: "Vehicles", source: "3D printed", status: "Built" },
+      { name: "Repulsor Executioner", count: 1, category: "Vehicles", source: "3D printed", status: "Built" },
       { name: "Redemptor Dreadnought", count: 1, category: "Vehicles", source: "Iron Halo Strike Force" },
       { name: "Ballistus Dreadnought", count: 1, category: "Vehicles", source: "Iron Halo Strike Force" },
       { name: "Land Speeder", count: 1, category: "Vehicles", source: "Armageddon" }
     ],
-    wanted: ["Marneus Calgar + Victrix Guard", "5 Infiltrators", "3 Inceptors", "Gladiator Lancer", "Ultramarines Upgrade Kit"]
+    wanted: ["Chaplain Grimaldus", "Primaris Crusader Squad", "5 Sword Brethren", "Infiltrators / Incursors", "Techmarine"]
+  },
+  {
+    id: "imperial-fists",
+    name: "Imperial Fists",
+    shortName: "IF",
+    role: "Dorn-heritage honour guard",
+    theme: "A compact yellow honour guard built around the Company Heroes, with a Librarian reserved for the future project.",
+    scheme: "Imperial Fists",
+    accent: "#f0c81e",
+    units: [
+      { name: "Captain", count: 1, category: "Characters", source: "Iron Halo Strike Force", note: "Company Heroes commander" },
+      { name: "Librarian", count: 1, category: "Characters", source: "Armageddon" },
+      { name: "Company Heroes bodyguard", count: 4, category: "Infantry", source: "Iron Halo Strike Force" },
+    ],
+    wanted: ["Future multipart Tacticus squad", "Future Gravis unit", "Siege-support vehicle"]
   },
   {
     id: "orks",
